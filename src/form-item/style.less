@@ -1,0 +1,869 @@
+// @root-entry-name: 'default';
+// @import (reference) '~antd/es/style/themes/index.less';
+// @import (reference) '~antd/lib/input/style/mixin.less';
+@import './grid.less';
+@import './animation.less';
+
+@form-item-cls: ~'arco-formily-item';
+@form-item-margin-bottom: 12;
+@font-size-base: 14px;
+@font-size-sm: 10px;
+@font-size-lg: 18px;
+@height-base: 20px;
+@height-sm: 16px;
+@height-lg: 24px;
+@background-color-light: #cecece;
+@heading-color: #232323;
+@text-color-secondary: blue;
+@error-color: red;
+@warning-color: yellow;
+@success-color: green;
+@border-color-base: #cecece;
+@form-warning-input-bg: lightpink;
+@form-error-input-bg: pink;
+
+.hover() {
+
+}
+
+.active() {}
+
+.@{form-item-cls} {
+  display: flex;
+  margin-bottom: @form-item-margin-bottom - 2;
+  position: relative;
+  font-size: @font-size-base;
+
+  &-label {
+    line-height: @height-base;
+    min-height: @height-base - 2;
+    label {
+      cursor: text;
+    }
+  }
+
+  textarea.arco-input {
+    height: auto;
+  }
+
+  // input[type=file]
+  .arco-upload {
+    background: transparent;
+  }
+
+  .arco-upload.arco-upload-drag {
+    background: @background-color-light;
+  }
+
+  input[type='radio'],
+  input[type='checkbox'] {
+    width: @font-size-base;
+    height: @font-size-base;
+  }
+
+  // Radios and checkboxes on same line
+  .arco-radio-inline,
+  .arco-checkbox-inline {
+    display: inline-block;
+    margin-left: 8px;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .arco-checkbox-vertical,
+  .arco-radio-vertical {
+    display: block;
+  }
+
+  .arco-checkbox-vertical + .arco-checkbox-vertical,
+  .arco-radio-vertical + .arco-radio-vertical {
+    margin-left: 0;
+  }
+
+  .arco-input-number {
+    width: 100%;
+
+    + .arco-form-text {
+      margin-left: 8px;
+    }
+
+    &-handler-wrap {
+      z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
+    }
+  }
+
+  .arco-select,
+  .arco-cascader-picker,
+  .arco-picker {
+    width: 100%;
+  }
+
+  // Don't impact select inside input group
+  .arco-input-group .arco-select,
+  .arco-input-group .arco-cascader-picker {
+    width: auto;
+  }
+}
+
+.@{form-item-cls}-label {
+  position: relative;
+  display: flex;
+
+  &-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-tooltip {
+    cursor: help;
+
+    * {
+      cursor: help;
+    }
+
+    label {
+      border-bottom: 1px dashed currentColor;
+    }
+  }
+}
+
+.@{form-item-cls}-label {
+  color: @heading-color;
+}
+
+.@{form-item-cls}-label-align-left {
+  > .@{form-item-cls}-label {
+    justify-content: flex-start;
+  }
+}
+
+.@{form-item-cls}-label-align-right {
+  > .@{form-item-cls}-label {
+    justify-content: flex-end;
+  }
+}
+
+.@{form-item-cls}-label-wrap {
+  .@{form-item-cls}-label {
+    label {
+      white-space: pre-line;
+      word-break: break-all;
+    }
+  }
+}
+
+.@{form-item-cls}-feedback-layout-terse {
+  margin-bottom: 8px;
+
+  &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+    margin-bottom: 0;
+  }
+}
+
+.@{form-item-cls}-feedback-layout-loose {
+  margin-bottom: 22px;
+
+  &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+    margin-bottom: 0;
+  }
+}
+
+.@{form-item-cls}-feedback-layout-none {
+  margin-bottom: 0px;
+
+  &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+    margin-bottom: 0;
+  }
+}
+
+.@{form-item-cls}-control {
+  flex: 1;
+  max-width: 100%;
+
+  .@{form-item-cls}-control-content {
+    display: flex;
+
+    .@{form-item-cls}-control-content-component {
+      width: 100%;
+      min-height: @height-base - 2;
+      line-height: @height-base + 2;
+
+      &-has-feedback-icon {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .@{form-item-cls}-addon-before {
+      margin-right: 8px;
+      display: inline-flex;
+      align-items: center;
+      min-height: @height-base;
+      flex-shrink: 0;
+    }
+
+    .@{form-item-cls}-addon-after {
+      margin-left: 8px;
+      display: inline-flex;
+      align-items: center;
+      min-height: @height-base;
+      flex-shrink: 0;
+    }
+  }
+
+  .@{form-item-cls}-help,
+  .@{form-item-cls}-extra {
+    min-height: 22px;
+    line-height: 22px;
+    color: @text-color-secondary;
+  }
+}
+
+.@{form-item-cls}-size-small {
+  font-size: @font-size-sm;
+
+  line-height: @height-sm;
+
+  .@{form-item-cls}-label {
+    line-height: @height-sm;
+    min-height: @height-sm - 2;
+  }
+
+  .@{form-item-cls}-control-content {
+    .@{form-item-cls}-control-content-component {
+      min-height: @height-sm - 2;
+      line-height: @height-sm + 2;
+    }
+  }
+
+  .@{form-item-cls}-help,
+  .@{form-item-cls}-extra {
+    min-height: @height-sm - 4;
+    line-height: @height-sm - 4;
+  }
+
+  .@{form-item-cls}-control-content {
+    min-height: @height-sm - 2;
+  }
+
+  .@{form-item-cls}-label > label {
+    height: @height-sm - 2;
+  }
+
+  .arco-input-affix-wrapper,
+  .arco-input-number,
+  .arco-picker {
+    padding: 0px 11px;
+
+    input {
+      height: @height-sm - 2;
+      font-size: @font-size-sm;
+    }
+  }
+
+  .arco-cascader-picker {
+    height: @height-sm - 2;
+
+    input {
+      padding: 0 7px;
+      height: @height-sm - 2;
+      font-size: @font-size-sm;
+    }
+  }
+
+  .arco-select-single:not(.arco-select-customize-input)
+    .arco-select-selector {
+    padding: 0px 11px;
+    height: @height-sm - 2;
+    font-size: @font-size-sm;
+    line-height: @height-sm;
+
+    .arco-select-selection-search {
+      height: @height-sm;
+      line-height: @height-sm - 2;
+
+      &-input {
+        height: @height-sm;
+        line-height: @height-sm - 2;
+      }
+    }
+
+    .arco-select-selection-placeholder {
+      line-height: @height-sm - 2;
+      height: @height-sm;
+    }
+
+    .arco-select-selection-item {
+      line-height: @height-sm - 2;
+      height: @height-sm;
+    }
+  }
+
+  .arco-select-multiple:not(.arco-select-customize-input)
+    .arco-select-selector {
+    padding: 0px 2px;
+    height: @height-sm - 2;
+    font-size: @font-size-sm;
+    line-height: @height-sm;
+
+    &::after {
+      height: @height-sm - 8;
+      line-height: @height-sm - 8;
+    }
+
+    .arco-select-selection-search {
+      height: @height-sm - 8;
+      line-height: @height-sm - 8;
+      margin-inline-start: 0;
+
+      &-input {
+        height: @height-sm - 12;
+        line-height: @height-sm - 12;
+      }
+    }
+
+    .arco-select-selection-placeholder {
+      line-height: @height-sm - 8;
+      height: @height-sm - 8;
+      left: 4px;
+    }
+
+    .arco-select-selection-overflow-item {
+      align-self: flex-start;
+    }
+
+    .arco-select-selection-item {
+      line-height: @height-sm - 10;
+      height: @height-sm - 8;
+    }
+  }
+
+  &.@{form-item-cls}-feedback-layout-terse {
+    margin-bottom: 8px;
+
+    &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+      margin-bottom: 0;
+    }
+  }
+
+  &.@{form-item-cls}-feedback-layout-loose {
+    margin-bottom: @height-sm - 4;
+
+    &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.@{form-item-cls}-size-large {
+  font-size: @font-size-lg;
+  line-height: @height-lg;
+
+  .@{form-item-cls}-label {
+    line-height: @height-lg;
+    min-height: @height-lg - 2;
+  }
+
+  .@{form-item-cls}-control-content {
+    .@{form-item-cls}-control-content-component {
+      min-height: @height-lg - 2;
+      line-height: @height-lg;
+    }
+  }
+
+  .@{form-item-cls}-help,
+  .@{form-item-cls}-extra {
+    min-height: @form-item-margin-bottom;
+    line-height: @form-item-margin-bottom;
+  }
+
+  .@{form-item-cls}-control-content {
+    min-height: @height-lg - 2;
+  }
+
+  .arco-input {
+    font-size: @font-size-lg;
+  }
+
+  .arco-input-number {
+    font-size: @font-size-lg;
+
+    input {
+      height: @height-lg - 2;
+    }
+  }
+
+  .arco-input-affix-wrapper,
+  .arco-picker {
+    padding: 0px 11px;
+    line-height: @height-lg - 2;
+
+    input {
+      height: @height-lg - 2;
+      font-size: @font-size-lg;
+    }
+  }
+
+  .arco-btn {
+    height: @height-lg;
+    padding: 0px 8px;
+  }
+
+  .arco-radio-button-wrapper {
+    height: @height-lg;
+    line-height: @height-lg;
+  }
+
+  .arco-cascader-picker {
+    height: @height-lg - 2;
+
+    input {
+      padding: 0px 11px;
+      height: @height-lg - 2;
+      font-size: @font-size-lg;
+    }
+  }
+
+  .arco-select-single:not(.arco-select-customize-input)
+    .arco-select-selector {
+    padding: 0px 11px;
+    height: @height-lg;
+    font-size: @font-size-lg;
+    line-height: @height-lg;
+
+    .arco-select-selection-search {
+      height: @height-lg;
+      line-height: @height-lg - 2;
+
+      &-input {
+        height: @height-lg;
+        line-height: @height-lg - 2;
+      }
+    }
+
+    .arco-select-selection-placeholder {
+      line-height: @height-lg - 2;
+      height: @height-lg;
+    }
+
+    .arco-select-selection-item {
+      line-height: @height-lg - 2;
+      height: @height-lg;
+    }
+  }
+
+  .arco-select-multiple:not(.arco-select-customize-input)
+    .arco-select-selector {
+    padding: 0px 2px;
+    height: @height-lg - 2;
+    font-size: @font-size-lg;
+    line-height: @height-lg;
+
+    &::after {
+      height: @height-lg - 8;
+      line-height: @height-lg - 8;
+    }
+
+    .arco-select-selection-search {
+      height: @height-lg - 8;
+      line-height: @height-lg - 8;
+
+      &-input {
+        height: @height-lg - 12;
+        line-height: @height-lg - 12;
+      }
+    }
+
+    .arco-select-selection-placeholder {
+      line-height: @height-lg - 8;
+      height: @height-lg - 8;
+    }
+
+    .arco-select-selection-overflow-item {
+      align-self: flex-start;
+    }
+
+    .arco-select-selection-item {
+      line-height: @height-lg - 10;
+      height: @height-lg - 8;
+    }
+  }
+
+  &.@{form-item-cls}-feedback-layout-terse {
+    margin-bottom: 8px;
+
+    &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+      margin-bottom: 0;
+    }
+  }
+
+  &.@{form-item-cls}-feedback-layout-loose {
+    margin-bottom: @form-item-margin-bottom;
+
+    &.@{form-item-cls}-feedback-has-text:not(.@{form-item-cls}-inset) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.@{form-item-cls} {
+  &-layout-vertical {
+    display: block;
+
+    .@{form-item-cls}-label {
+      min-height: @height-base - 10;
+      line-height: 1.5715;
+    }
+  }
+}
+
+.@{form-item-cls}-feedback-layout-popover {
+  margin-bottom: 8px;
+}
+
+.@{form-item-cls}-label-tooltip-icon {
+  margin-left: 4px;
+  color: #00000073;
+  display: flex;
+  align-items: center;
+  max-height: @height-base;
+
+  span {
+    display: inline-flex;
+  }
+}
+
+.@{form-item-cls}-control-align-left {
+  .@{form-item-cls}-control-content {
+    justify-content: flex-start;
+  }
+}
+
+.@{form-item-cls}-control-align-right {
+  .@{form-item-cls}-control-content {
+    justify-content: flex-end;
+  }
+}
+
+.@{form-item-cls}-control-wrap {
+  .@{form-item-cls}-control {
+    white-space: pre-line;
+    word-break: break-all;
+  }
+}
+
+.@{form-item-cls}-asterisk {
+  color: @error-color;
+  margin-right: 4px;
+  display: inline-block;
+  font-family: SimSun, sans-serif;
+}
+
+.@{form-item-cls}-optional {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.@{form-item-cls}-colon {
+  margin-left: 2px;
+  margin-right: 8px;
+}
+
+.@{form-item-cls}-help,
+.@{form-item-cls}-extra {
+  clear: both;
+  min-height: @form-item-margin-bottom - 2;
+  color: rgba(0, 0, 0, 0.45);
+  transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  padding-top: 0px;
+}
+
+.@{form-item-cls}-fullness {
+  > .@{form-item-cls}-control {
+    > .@{form-item-cls}-control-content {
+      > .@{form-item-cls}-control-content-component {
+        > *:first-child {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.@{form-item-cls}-control-content-component-has-feedback-icon {
+  border-radius: 2px;
+  border: 1px solid @border-color-base;
+  padding-right: 8px;
+  transition: all 0.3s;
+  touch-action: manipulation;
+  outline: none;
+
+  .arco-input-number,
+  .arco-picker,
+  .arco-cascader-picker:focus .arco-cascader-input,
+  .arco-select:not(.arco-select-customize-input)
+    .arco-select-selector,
+  .arco-input-affix-wrapper,
+  .arco-input {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.@{form-item-cls}-bordered-none {
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-picker,
+  .arco-cascader-picker:focus .arco-cascader-input,
+  .arco-select:not(.arco-select-customize-input)
+    .arco-select-selector,
+  .arco-input {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .arco-input-number-handler-wrap {
+    border: none !important;
+
+    .arco-input-number-handler {
+      border: none !important;
+    }
+  }
+}
+
+.@{form-item-cls}-inset {
+  border-radius: 2px;
+  border: 1px solid @border-color-base;
+  padding-left: 12px;
+  transition: 0.3s all;
+
+  .arco-input-number,
+  .arco-picker,
+  .arco-cascader-picker:focus .arco-cascader-input,
+  .arco-select:not(.arco-select-customize-input)
+    .arco-select-selector,
+  .arco-input-affix-wrapper,
+  .arco-input {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .arco-input-number-handler-wrap {
+    border: none !important;
+
+    .arco-input-number-handler {
+      border: none !important;
+    }
+  }
+
+  &:hover {
+    .hover();
+  }
+}
+
+.@{form-item-cls}-inset-active {
+  .active();
+}
+
+.@{form-item-cls}-active {
+  .@{form-item-cls}-control-content-component-has-feedback-icon {
+    .active();
+  }
+
+  .arco-input-number,
+  .arco-picker,
+  .arco-cascader-picker:focus .arco-cascader-input,
+  .arco-select:not(.arco-select-customize-input)
+    .arco-select-selector,
+  .arco-input {
+    .active();
+  }
+}
+
+.@{form-item-cls} {
+  &:hover {
+    .@{form-item-cls}-control-content-component-has-feedback-icon {
+      .hover();
+    }
+  }
+}
+
+.@{form-item-cls}-error {
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper,
+  .arco-input {
+    border-color: @error-color !important;
+  }
+
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper:hover,
+  .arco-input:hover {
+    border-color: @error-color !important;
+  }
+
+  .arco-select:not(.arco-select-disabled):not(.arco-select-customize-input) {
+    .arco-select-selector {
+      background-color: @form-error-input-bg;
+      border-color: @error-color !important;
+    }
+
+    // &.arco-select-open .arco-select-selector,
+    // &.arco-select-focused .arco-select-selector {
+    //   .active(@error-color);
+    // }
+  }
+
+  .arco-input-number,
+  .arco-picker {
+    background-color: @form-error-input-bg;
+    border-color: @error-color;
+
+    // &-focused,
+    // &:focus {
+    //   .active(@error-color);
+    // }
+
+    &:not([disabled]):hover {
+      background-color: @form-error-input-bg;
+      border-color: @error-color;
+    }
+  }
+
+  // .arco-cascader-picker:focus .arco-cascader-input {
+  //   background-color: @form-error-input-bg;
+  //   .active(@error-color);
+  // }
+
+  // .arco-input-affix-wrapper-focused,
+  // .arco-input-affix-wrapper:focus,
+  // .arco-input-focused,
+  // .arco-input:focus {
+  //   .active(@error-color);
+  // }
+}
+
+.@{form-item-cls}-error-help {
+  color: @error-color !important;
+}
+
+.@{form-item-cls}-warning-help {
+  color: @warning-color !important;
+}
+
+.@{form-item-cls}-success-help {
+  color: @success-color !important;
+}
+
+.@{form-item-cls}-warning {
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper,
+  .arco-input {
+    border-color: @warning-color !important;
+  }
+
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper:hover,
+  .arco-input:hover {
+    border-color: @warning-color !important;
+  }
+
+  .arco-select:not(.arco-select-disabled):not(.arco-select-customize-input) {
+    .arco-select-selector {
+      background-color: @form-warning-input-bg;
+      border-color: @warning-color !important;
+    }
+
+    // &.arco-select-open .arco-select-selector,
+    // &.arco-select-focused .arco-select-selector {
+    //   .active(@warning-color);
+    // }
+  }
+
+  .arco-input-number,
+  .arco-picker {
+    background-color: @form-warning-input-bg;
+    border-color: @warning-color;
+
+    // &-focused,
+    // &:focus {
+    //   .active(@warning-color);
+    // }
+
+    &:not([disabled]):hover {
+      background-color: @form-warning-input-bg;
+      border-color: @warning-color;
+    }
+  }
+
+  // .arco-cascader-picker:focus .arco-cascader-input {
+  //   background-color: @form-warning-input-bg;
+  //   .active(@warning-color);
+  // }
+
+  // .arco-input-affix-wrapper-focused,
+  // .arco-input-affix-wrapper:focus,
+  // .arco-input-focused,
+  // .arco-input:focus {
+  //   .active(@warning-color);
+  // }
+}
+
+.@{form-item-cls}-success {
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper,
+  .arco-input {
+    border-color: @success-color !important;
+  }
+
+  .arco-select-selector,
+  .arco-cascader-picker,
+  .arco-picker,
+  .arco-input,
+  .arco-input-number,
+  .arco-input-affix-wrapper,
+  .arco-input-affix-wrapper:hover,
+  .arco-input:hover {
+    border-color: @success-color !important;
+  }
+
+  .arco-input-affix-wrapper-focused,
+  .arco-input-affix-wrapper:focus,
+  .arco-input-focused,
+  .arco-input:focus {
+    border-color: @success-color !important;
+    border-right-width: 1px !important;
+    outline: 0;
+  }
+}

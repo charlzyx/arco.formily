@@ -1,0 +1,43 @@
+const path = require('path');
+const fs = require('fs');
+
+/**
+ * [
+  {
+    "text": "Guide",
+    "link": "/guide/",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "Hello World",
+    "link": "/hello/",
+    "activeMatch": "/hello/"
+  },
+  {
+    "text": "API",
+    "link": "https://rspress.dev/api/index.html"
+  }
+]
+
+ */
+const pwd = process.argv[2] || process.cwd();
+const list = fs.readdirSync(pwd);
+console.log(list)
+const json = [
+];
+
+list.forEach(iitem => {
+  if (/index|_meta/.test(iitem)) return;
+  const item = iitem.replace(/\.mdx/, '');
+  json.push({
+    "name": item,
+    "label": item,
+    "type": "file",
+    "activeMatch": "^/basic/" + item.toLowerCase()
+  })
+})
+
+
+console.log(`${pwd}/_meta.json`, json);
+
+fs.writeFileSync(`${pwd}/_meta.json`, JSON.stringify(json, null, 2), 'utf-8')
