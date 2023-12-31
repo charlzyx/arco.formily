@@ -1,33 +1,28 @@
 import { useRef, useState, useEffect } from "react";
 import { isArr, isValid } from "@formily/shared";
 
-interface IProps {
+/**
+ * 这些属性会根据 response 来响应式的配置
+ */
+export type IComputedProps = {
+  layout?: "vertical" | "horizontal" | "inline";
+  labelCol?: number;
+  labelAlign?: "right" | "left";
+  wrapperCol?: number;
+  wrapperAlign?: "right" | "left";
+};
+
+/**
+ * 传入的配置是数组形式
+ */
+export type IResponsiveFormLayoutProps<T> = T & {
+  [K in keyof IComputedProps]: IComputedProps[K] | IComputedProps[K][];
+} & {
   breakpoints?: number[];
-  layout?:
-    | "vertical"
-    | "horizontal"
-    | "inline"
-    | ("vertical" | "horizontal" | "inline")[];
-  labelCol?: number | number[];
-  wrapperCol?: number | number[];
-  labelAlign?: "right" | "left" | ("right" | "left")[];
-  wrapperAlign?: "right" | "left" | ("right" | "left")[];
-  [props: string]: any;
-}
+};
 
 interface ICalcBreakpointIndex {
   (originalBreakpoints: number[], width: number): number;
-}
-
-interface ICalculateProps {
-  (target: HTMLElement, props: IProps): IProps;
-}
-
-interface IUseResponsiveFormLayout {
-  (props: IProps): {
-    ref: React.MutableRefObject<HTMLDivElement | null>;
-    props: any;
-  };
 }
 
 const calcBreakpointIndex: ICalcBreakpointIndex = (breakpoints, width) => {
@@ -51,7 +46,11 @@ const calcFactor = <T>(value: T | T[], breakpointIndex: number): T => {
 const factor = <T>(value: T | T[], breakpointIndex: number): T =>
   isValid(value) ? calcFactor(value as any, breakpointIndex) : value;
 
-const calculateProps: ICalculateProps = (target, props) => {
+const calculateProps = <T>(
+  target: HTMLElement | null = null,
+  props: IResponsiveFormLayoutProps<T>
+) => {
+  if (!target) return props as IComputedProps & T;
   const { clientWidth } = target;
   const {
     breakpoints,
@@ -71,16 +70,18 @@ const calculateProps: ICalculateProps = (target, props) => {
     labelCol: factor(labelCol, breakpointIndex),
     wrapperCol: factor(wrapperCol, breakpointIndex),
     ...otherProps,
-  };
+  } as IComputedProps & T;
 };
 
-export const useResponsiveFormLayout: IUseResponsiveFormLayout = (props) => {
+export const useResponsiveFormLayout = <T>(
+  props: IResponsiveFormLayoutProps<T>
+) => {
   const ref = useRef<HTMLDivElement>(null);
   const { breakpoints } = props;
   if (!isArr(breakpoints)) {
     return { ref, props };
   }
-  const [layoutProps, setLayout] = useState<any>(props);
+  const [layoutProps, setLayout] = useState(props);
 
   const updateUI = () => {
     if (ref.current) {
@@ -104,6 +105,6 @@ export const useResponsiveFormLayout: IUseResponsiveFormLayout = (props) => {
 
   return {
     ref,
-    props: layoutProps,
+    props: layoutProps as IComputedProps & T,
   };
 };

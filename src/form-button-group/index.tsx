@@ -100,9 +100,9 @@ FormButtonGroup.FormItem = ({ gutter, ...props }) => {
       colon={false}
     >
       {(props.children as any)?.length ? (
-        <Space size={gutter}>{props.children}</Space>
+        <Space size={gutter}>{props.children as React.ReactNode}</Space>
       ) : (
-        props.children
+        (props.children as React.ReactNode)
       )}
     </BaseItem>
   );

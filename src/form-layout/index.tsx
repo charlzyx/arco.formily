@@ -1,60 +1,53 @@
-import React, { createContext, useContext } from "react";
-import { useResponsiveFormLayout } from "./useResponsiveFormLayout";
-import { usePrefixCls } from "../__builtins__";
+import { ConfigProvider, FormProps, SpaceProps } from "@arco-design/web-react";
+import "@arco-design/web-react/lib/Form/style/index";
+import { IGridOptions } from "@formily/grid";
 import cls from "classnames";
+import React, { createContext, useContext } from "react";
+import { usePrefixCls } from "../__builtins__";
+import {
+  IComputedProps,
+  IResponsiveFormLayoutProps,
+  useResponsiveFormLayout,
+} from "./useResponsiveFormLayout";
 
-export interface IFormLayoutProps {
-  prefixCls?: string;
-  className?: string;
-  style?: React.CSSProperties;
-  colon?: boolean;
-  requiredMark?: boolean | "optional";
-  labelAlign?: "right" | "left" | ("right" | "left")[];
-  wrapperAlign?: "right" | "left" | ("right" | "left")[];
+type ArcoFormLayout = Pick<
+  FormProps,
+  "colon" | "size" | "style" | "className" | "prefixCls"
+> & { shallow?: boolean };
+
+// formily 增强
+export interface FormLayoutPro {
   labelWrap?: boolean;
-  labelWidth?: number;
-  wrapperWidth?: number;
+  labelWidth?: React.CSSProperties["width"];
   wrapperWrap?: boolean;
-  labelCol?: number | number[];
-  wrapperCol?: number | number[];
-  fullness?: boolean;
-  size?: "small" | "default" | "large";
-  layout?:
-    | "vertical"
-    | "horizontal"
-    | "inline"
-    | ("vertical" | "horizontal" | "inline")[];
-  direction?: "rtl" | "ltr";
-  inset?: boolean;
-  shallow?: boolean;
-  tooltipLayout?: "icon" | "text";
-  tooltipIcon?: React.ReactNode;
-  feedbackLayout?: "loose" | "terse" | "popover" | "none";
-  bordered?: boolean;
-  breakpoints?: number[];
-  spaceGap?: number;
+  wrapperWidth?: React.CSSProperties["width"];
+  labelStyle?: React.CSSProperties;
+  wrapperStyle?: React.CSSProperties;
+}
+
+export interface IFormilyLayoutContext
+  extends IComputedProps,
+    Pick<
+      FormProps,
+      "prefixCls" | "className" | "style" | "colon" | "size" | "requiredSymbol"
+    >,
+    FormLayoutPro,
+    // @formily/grid
+    IGridOptions {
+  gridSpan?: number;
   gridColumnGap?: number;
   gridRowGap?: number;
+  spaceGap?: SpaceProps["size"];
 }
 
-export interface IFormLayoutContext
-  extends Omit<
-    IFormLayoutProps,
-    "labelAlign" | "wrapperAlign" | "layout" | "labelCol" | "wrapperCol"
-  > {
-  labelAlign?: "right" | "left";
-  wrapperAlign?: "right" | "left";
-  layout?: "vertical" | "horizontal" | "inline";
-  labelCol?: number;
-  wrapperCol?: number;
-}
+export interface IFormilyLayoutProps extends IFormilyLayoutContext {}
 
-export const FormLayoutDeepContext = createContext<IFormLayoutContext>(
-  null as unknown as IFormLayoutContext
+export const FormLayoutDeepContext = createContext<IFormilyLayoutContext>(
+  null as unknown as IFormilyLayoutContext
 );
 
-export const FormLayoutShallowContext = createContext<IFormLayoutContext>(
-  null as unknown as IFormLayoutContext
+export const FormLayoutShallowContext = createContext<IFormilyLayoutContext>(
+  null as unknown as IFormilyLayoutContext
 );
 
 export const useFormDeepLayout = () => useContext(FormLayoutDeepContext);
@@ -66,21 +59,32 @@ export const useFormLayout = () => ({
   ...useFormShallowLayout(),
 });
 
-export const FormLayout: React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
-  useFormLayout: () => IFormLayoutContext;
-  useFormDeepLayout: () => IFormLayoutContext;
-  useFormShallowLayout: () => IFormLayoutContext;
+export const FormLayout: React.FC<
+  React.PropsWithChildren<IResponsiveFormLayoutProps<ArcoFormLayout>>
+> & {
+  useFormLayout: () => IFormilyLayoutContext;
+  useFormDeepLayout: () => IFormilyLayoutContext;
+  useFormShallowLayout: () => IFormilyLayoutContext;
 } = ({ shallow, children, prefixCls, className, style, ...otherProps }) => {
-  const { ref, props } = useResponsiveFormLayout(otherProps);
+  const ctx = useContext(ConfigProvider.ConfigContext);
+  const { ref, props } = useResponsiveFormLayout<ArcoFormLayout>({
+    breakpoints: [],
+    labelCol: [5],
+    wrapperCol: [19],
+    ...otherProps,
+  });
+  console.log("ffprops", props);
   const deepLayout = useFormDeepLayout();
   const formPrefixCls = usePrefixCls("form", { prefix: prefixCls });
   const layoutPrefixCls = usePrefixCls("formily-layout", { prefix: prefixCls });
   const layoutClassName = cls(
     layoutPrefixCls,
+    formPrefixCls,
     {
       [`${formPrefixCls}-${props.layout}`]: true,
-      [`${formPrefixCls}-rtl`]: props.direction === "rtl",
-      [`${formPrefixCls}-${props.size}`]: props.size,
+      [`${formPrefixCls}-rtl`]: ctx.rtl,
+      [`${formPrefixCls}-size-${props.size || "default"}`]:
+        props.size || ctx.size,
     },
     className
   );
@@ -98,9 +102,12 @@ export const FormLayout: React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
         newDeepLayout.colon = props.colon;
       }
     }
+
     return (
       <FormLayoutDeepContext.Provider value={newDeepLayout}>
-        <FormLayoutShallowContext.Provider value={shallow ? props : undefined}>
+        <FormLayoutShallowContext.Provider
+          value={shallow ? props : (undefined as any)}
+        >
           {children}
         </FormLayoutShallowContext.Provider>
       </FormLayoutDeepContext.Provider>

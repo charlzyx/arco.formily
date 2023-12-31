@@ -4,10 +4,11 @@ import { useFormLayout } from "../form-layout";
 
 export const Space: React.FC<React.PropsWithChildren<SpaceProps>> = (props) => {
   const layout = useFormLayout();
-  return React.createElement(ArcoSpace, {
-    size: props.size ?? layout?.spaceGap,
-    ...props,
-  });
+  return (
+    <ArcoSpace {...props} size={props.size || layout.spaceGap}>
+      {props.children}
+    </ArcoSpace>
+  );
 };
 
 export default Space;
