@@ -1,11 +1,12 @@
-// export * from './array-base'
-// export * from './array-table'
+export * from "./array-base";
+export * from "./array-table";
 // export * from './array-tabs'
 // export * from './array-cards'
 // export * from './array-collapse'
 // export * from './array-items'
 // export * from './form-dialog'
 // export * from './form-drawer'
+
 export * from "./form";
 export * from "./form-item";
 export * from "./form-layout";
@@ -31,5 +32,5 @@ export * from "./switch";
 // export * from './upload'
 export * from "./submit";
 export * from "./reset";
-// export * from './editable'
+export * from "./editable";
 // export * from './select-table'

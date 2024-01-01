@@ -52,7 +52,6 @@ const calculateProps = <T>(
 ) => {
   if (!target) return props as IComputedProps & T;
   const { clientWidth } = target;
-  console.log("clientWidth", clientWidth);
   const {
     breakpoints,
     layout,
