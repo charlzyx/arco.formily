@@ -1,7 +1,6 @@
 import { isVoidField } from "@formily/core";
 import { connect, mapProps } from "@formily/react";
-import React, { useEffect, useRef, useState } from "react";
-import { useFormLayout } from "../form-layout";
+import React from "react";
 import { BaseItem, IFormItemProps } from "./base-item";
 export { BaseItem } from "./base-item";
 export type { IFormItemProps } from "./base-item";
@@ -22,7 +21,7 @@ export const FormItem: ComposeFormItem = connect(
       };
     if (!field) return props;
     const takeFeedbackStatus = () => {
-      if (field.validating) return "pending";
+      if (field.validating) return "validating";
       return field.decoratorProps.feedbackStatus || field.validateStatus;
     };
     const takeMessage = () => {
@@ -44,16 +43,16 @@ export const FormItem: ComposeFormItem = connect(
       if (field.required && field.pattern !== "readPretty") {
         return true;
       }
-      if ("asterisk" in props) {
-        return props.asterisk;
-      }
+      // if ("asterisk" in props) {
+      //   return props.asterisk;
+      // }
       return false;
     };
     return {
       label: props.label || field.title,
       feedbackStatus: takeFeedbackStatus(),
       feedbackText: takeMessage(),
-      asterisk: takeAsterisk(),
+      required: takeAsterisk(),
       optionalMarkHidden:
         field.pattern === "readPretty" && !("asterisk" in props),
       extra: props.extra || field.description,

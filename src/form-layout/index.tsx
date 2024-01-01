@@ -1,5 +1,4 @@
 import { ConfigProvider, FormProps, SpaceProps } from "@arco-design/web-react";
-import "@arco-design/web-react/lib/Form/style/index";
 import { IGridOptions } from "@formily/grid";
 import cls from "classnames";
 import React, { createContext, useContext } from "react";
@@ -67,18 +66,10 @@ export const FormLayout: React.FC<
   useFormShallowLayout: () => IFormilyLayoutContext;
 } = ({ shallow, children, prefixCls, className, style, ...otherProps }) => {
   const ctx = useContext(ConfigProvider.ConfigContext);
-  const { ref, props } = useResponsiveFormLayout<ArcoFormLayout>({
-    breakpoints: [],
-    labelCol: [5],
-    wrapperCol: [19],
-    ...otherProps,
-  });
-  console.log("ffprops", props);
+  const { ref, props } = useResponsiveFormLayout<ArcoFormLayout>(otherProps);
   const deepLayout = useFormDeepLayout();
   const formPrefixCls = usePrefixCls("form", { prefix: prefixCls });
-  const layoutPrefixCls = usePrefixCls("formily-layout", { prefix: prefixCls });
   const layoutClassName = cls(
-    layoutPrefixCls,
     formPrefixCls,
     {
       [`${formPrefixCls}-${props.layout}`]: true,
@@ -108,7 +99,9 @@ export const FormLayout: React.FC<
         <FormLayoutShallowContext.Provider
           value={shallow ? props : (undefined as any)}
         >
-          {children}
+          <ConfigProvider {...ctx} size={props.size || ctx.size}>
+            {children}
+          </ConfigProvider>
         </FormLayoutShallowContext.Provider>
       </FormLayoutDeepContext.Provider>
     );

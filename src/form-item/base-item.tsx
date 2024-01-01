@@ -1,7 +1,6 @@
 import {
-  ConfigProvider,
   FormItemProps as ArcoFormItemProps,
-  Grid,
+  Space,
   Tooltip,
   TooltipProps,
 } from "@arco-design/web-react";
@@ -12,17 +11,10 @@ import {
   IconLoading,
   IconQuestionCircle,
 } from "@arco-design/web-react/icon";
+import { Field } from "@formily/core";
 import { isObj, isUndef } from "@formily/shared";
 import cls from "classnames";
-import React, {
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactNode, useCallback } from "react";
 import { CSSTransition } from "react-transition-group";
 import { pickDataProps, usePrefixCls } from "../__builtins__";
 import {
@@ -31,7 +23,6 @@ import {
   useFormLayout,
 } from "../form-layout";
 import "./style";
-import { Field } from "@formily/core";
 
 export interface IFormItemProps
   extends Omit<
@@ -129,8 +120,8 @@ const FormItemTip: React.FC<
   Pick<IFormItemProps, "feedbackStatus" | "feedbackText"> & {
     prefixCls: string;
   }
-> = ({ prefixCls, feedbackStatus, feedbackText }) => {
-  const visible = Boolean(!isUndef(feedbackStatus) && feedbackText);
+> = ({ prefixCls, feedbackText }) => {
+  const visible = Boolean(feedbackText);
 
   const renderTxt = useCallback((text: string, k: number) => {
     return (
@@ -155,7 +146,7 @@ const FormItemTip: React.FC<
         <React.Fragment>
           {Array.isArray(feedbackText)
             ? feedbackText.map(renderTxt)
-            : feedbackText}
+            : renderTxt(feedbackText!, 1)}
         </React.Fragment>
       </CSSTransition>
     )
@@ -177,7 +168,7 @@ const FormItemLabel: React.FC<FormItemLabelProps> = ({
   htmlFor,
   showColon,
   label,
-  requiredSymbol,
+  requiredSymbol = true,
   required,
   prefix,
   tooltip,
@@ -187,7 +178,7 @@ const FormItemLabel: React.FC<FormItemLabelProps> = ({
     : "start";
 
   const symbolNode = required && !!requiredSymbol && (
-    <strong className={`${prefix}-form-item-symbol`}>
+    <strong className={`${prefix}-item-symbol ${prefix}-item-symbol-formily`}>
       <svg fill="currentColor" viewBox="0 0 1024 1024" width="1em" height="1em">
         <path d="M583.338667 17.066667c18.773333 0 34.133333 15.36 34.133333 34.133333v349.013333l313.344-101.888a34.133333 34.133333 0 0 1 43.008 22.016l42.154667 129.706667a34.133333 34.133333 0 0 1-21.845334 43.178667l-315.733333 102.4 208.896 287.744a34.133333 34.133333 0 0 1-7.509333 47.786666l-110.421334 80.213334a34.133333 34.133333 0 0 1-47.786666-7.509334L505.685333 706.218667 288.426667 1005.226667a34.133333 34.133333 0 0 1-47.786667 7.509333l-110.421333-80.213333a34.133333 34.133333 0 0 1-7.509334-47.786667l214.186667-295.253333L29.013333 489.813333a34.133333 34.133333 0 0 1-22.016-43.008l42.154667-129.877333a34.133333 34.133333 0 0 1 43.008-22.016l320.512 104.106667L412.672 51.2c0-18.773333 15.36-34.133333 34.133333-34.133333h136.533334z" />
       </svg>
@@ -198,7 +189,7 @@ const FormItemLabel: React.FC<FormItemLabelProps> = ({
     if (!tooltip) {
       return null;
     }
-    const tooltipIconClassName = `${prefix}-form-item-tooltip`;
+    const tooltipIconClassName = `${prefix}-item-tooltip`;
     let tooltipProps: TooltipProps = {};
     let tooltipIcon = <IconQuestionCircle className={tooltipIconClassName} />;
     if (!isObj(tooltip) || React.isValidElement(tooltip)) {
@@ -254,7 +245,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
     // addonBefore,
     // addonAfter,
     // asterisk,
-    requiredSymbol = true,
+    requiredSymbol,
     // optionalMarkHidden = false,
     feedbackStatus,
     feedbackText,
@@ -275,6 +266,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
     hidden,
     // wrapperAlign = "left",
     // labelWrap,
+    size,
     // wrapperWrap,
     // tooltipLayout,
     tooltip,
@@ -304,17 +296,20 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
     }
   }
 
-  console.log("ffitem", { labelAlign, enableCol, labelCol, wrapperCol });
-
   const prefixCls = usePrefixCls("form");
+  const fomrilyPrefixCls = usePrefixCls("formily-item");
 
   const gridStyles: React.CSSProperties = {};
 
   const classNames = cls(
+    // fomrilyPrefixCls,
     `${prefixCls}-item`,
     {
+      [`${prefixCls}-size-${size}`]: size,
       [`${prefixCls}-item-error`]: feedbackText && feedbackStatus == "error",
-      [`${prefixCls}-item-status-${feedbackStatus}`]: feedbackStatus,
+      [`${prefixCls}-item-status-${
+        feedbackStatus === "validating" ? "loading" : feedbackStatus
+      }`]: feedbackStatus,
       [`${prefixCls}-item-has-help`]: feedbackText,
       [`${prefixCls}-item-hidden`]: hidden,
       [`${prefixCls}-item-has-feedback`]: feedbackStatus && props.hasFeedback,
@@ -326,8 +321,6 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
   const labelClassNames = cls(`${prefixCls}-label-item`, {
     [`${prefixCls}-label-item-left`]: labelAlign === "left",
   });
-
-  console.log("base-item", props);
 
   return (
     <div
@@ -349,24 +342,26 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
       //   // }
       // }}
     >
-      <div
-        style={labelStyle}
-        className={cls(labelClassNames, {
-          [`${prefixCls}-item-col-${labelCol}`]: enableCol && !!labelCol,
-        })}
-      >
-        <FormItemLabel
-          label={label}
-          prefix={prefixCls}
-          showColon={colon}
-          required={!!required}
-          requiredSymbol={requiredSymbol}
-          tooltip={tooltip}
-        ></FormItemLabel>
-      </div>
+      {!label && layout !== "vertical" ? null : (
+        <div
+          style={labelStyle}
+          className={cls(labelClassNames, {
+            [`${prefixCls}-item-col-${labelCol}`]: enableCol && !!labelCol,
+          })}
+        >
+          <FormItemLabel
+            label={label}
+            prefix={prefixCls}
+            showColon={colon}
+            required={!!required}
+            requiredSymbol={requiredSymbol}
+            tooltip={tooltip}
+          ></FormItemLabel>
+        </div>
+      )}
       <div
         style={wrapperStyle}
-        className={cls({
+        className={cls(`${fomrilyPrefixCls}-wrapper`, {
           [`${prefixCls}-item-wrapper`]: true,
           [`${prefixCls}-item-col-${wrapperCol}`]:
             enableCol && !!wrapperCol && label,

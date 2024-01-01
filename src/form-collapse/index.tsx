@@ -139,6 +139,7 @@ export const FormCollapse: ComposedFormCollapse = observer(
     return (
       <Collapse
         {...props}
+        lazyload={false}
         className={cls(prefixCls, props.className)}
         activeKey={takeActiveKeys()}
         onChange={(key, keys, e) => {
@@ -148,10 +149,10 @@ export const FormCollapse: ComposedFormCollapse = observer(
       >
         {panels.map(({ props, schema, name }, index) => (
           <Collapse.Item
-            key={index}
+            name={name}
             {...props}
             header={badgedHeader(name, props)}
-            forceRender
+            // forceRender
           >
             <RecursionField schema={schema} name={name} />
           </Collapse.Item>

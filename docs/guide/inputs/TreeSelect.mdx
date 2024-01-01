@@ -32,45 +32,46 @@ export default () => (
         title="选择框"
         x-decorator="FormItem"
         x-component="TreeSelect"
+        // x-component-props={{
+        //   fieldNames: {
+        //     key: 'key',
+        //     title: 'title'
+        //   }
+        // }}
+
         enum={[
           {
-            label: "选项1",
-            value: 1,
+            title: "选项1",
+            key: 1,
             children: [
               {
                 title: "Child Node1",
-                value: "0-0-0",
                 key: "0-0-0",
               },
               {
                 title: "Child Node2",
-                value: "0-0-1",
                 key: "0-0-1",
               },
               {
                 title: "Child Node3",
-                value: "0-0-2",
                 key: "0-0-2",
               },
             ],
           },
           {
-            label: "选项2",
-            value: 2,
+            title: "选项2",
+            key: 2,
             children: [
               {
                 title: "Child Node3",
-                value: "0-1-0",
                 key: "0-1-0",
               },
               {
                 title: "Child Node4",
-                value: "0-1-1",
                 key: "0-1-1",
               },
               {
                 title: "Child Node5",
-                value: "0-1-2",
                 key: "0-1-2",
               },
             ],
@@ -120,7 +121,7 @@ const SchemaField = createSchemaField({
 
 const useAsyncDataSource = (
   pattern: FormPathPattern,
-  service: (field: Field) => Promise<{ label: string; value: any }[]>
+  service: (field: Field) => Promise<{ title: string; key: any }[]>
 ) => {
   onFieldReact(pattern, (field) => {
     field.loading = true;
@@ -140,91 +141,79 @@ const form = createForm({
       if (!linkage) return [];
       return new Promise((resolve) => {
         setTimeout(() => {
-          if (linkage === 1) {
+          if (linkage == 1) {
             resolve([
               {
-                label: "AAA",
-                value: "aaa",
+                title: "AAA",
+                key: "aaa",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-0-0",
                     key: "0-0-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-0-1",
                     key: "0-0-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-0-2",
                     key: "0-0-2",
                   },
                 ],
               },
               {
-                label: "BBB",
-                value: "ccc",
+                title: "BBB",
+                key: "ccc",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-1-0",
                     key: "0-1-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-1-1",
                     key: "0-1-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-1-2",
                     key: "0-1-2",
                   },
                 ],
               },
             ]);
-          } else if (linkage === 2) {
+          } else if (linkage == 2) {
             resolve([
               {
-                label: "CCC",
-                value: "ccc",
+                title: "CCC",
+                key: "ccc",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-0-0",
                     key: "0-0-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-0-1",
                     key: "0-0-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-0-2",
                     key: "0-0-2",
                   },
                 ],
               },
               {
-                label: "DDD",
-                value: "ddd",
+                title: "DDD",
+                key: "ddd",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-1-0",
                     key: "0-1-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-1-1",
                     key: "0-1-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-1-2",
                     key: "0-1-2",
                   },
                 ],
@@ -306,43 +295,37 @@ const schema = {
       "x-component": "TreeSelect",
       enum: [
         {
-          label: "选项1",
-          value: 1,
+          title: "选项1",
+          key: 1,
           children: [
             {
               title: "Child Node1",
-              value: "0-0-0",
               key: "0-0-0",
             },
             {
               title: "Child Node2",
-              value: "0-0-1",
               key: "0-0-1",
             },
             {
               title: "Child Node3",
-              value: "0-0-2",
               key: "0-0-2",
             },
           ],
         },
         {
-          label: "选项2",
-          value: 2,
+          title: "选项2",
+          key: 2,
           children: [
             {
               title: "Child Node1",
-              value: "0-1-0",
               key: "0-1-0",
             },
             {
               title: "Child Node2",
-              value: "0-1-1",
               key: "0-1-1",
             },
             {
               title: "Child Node3",
-              value: "0-1-2",
               key: "0-1-2",
             },
           ],
@@ -395,91 +378,79 @@ const loadData = async (field) => {
   if (!linkage) return [];
   return new Promise((resolve) => {
     setTimeout(() => {
-      if (linkage === 1) {
+      if (linkage == 1) {
         resolve([
           {
-            label: "AAA",
-            value: "aaa",
+            title: "AAA",
+            key: "aaa",
             children: [
               {
                 title: "Child Node1",
-                value: "0-0-0",
                 key: "0-0-0",
               },
               {
                 title: "Child Node2",
-                value: "0-0-1",
                 key: "0-0-1",
               },
               {
                 title: "Child Node3",
-                value: "0-0-2",
                 key: "0-0-2",
               },
             ],
           },
           {
-            label: "BBB",
-            value: "ccc",
+            title: "BBB",
+            key: "ccc",
             children: [
               {
                 title: "Child Node1",
-                value: "0-1-0",
                 key: "0-1-0",
               },
               {
                 title: "Child Node2",
-                value: "0-1-1",
                 key: "0-1-1",
               },
               {
                 title: "Child Node3",
-                value: "0-1-2",
                 key: "0-1-2",
               },
             ],
           },
         ]);
-      } else if (linkage === 2) {
+      } else if (linkage == 2) {
         resolve([
           {
-            label: "CCC",
-            value: "ccc",
+            title: "CCC",
+            key: "ccc",
             children: [
               {
                 title: "Child Node1",
-                value: "0-0-0",
                 key: "0-0-0",
               },
               {
                 title: "Child Node2",
-                value: "0-0-1",
                 key: "0-0-1",
               },
               {
                 title: "Child Node3",
-                value: "0-0-2",
                 key: "0-0-2",
               },
             ],
           },
           {
-            label: "DDD",
-            value: "ddd",
+            title: "DDD",
+            key: "ddd",
             children: [
               {
                 title: "Child Node1",
-                value: "0-1-0",
                 key: "0-1-0",
               },
               {
                 title: "Child Node2",
-                value: "0-1-1",
                 key: "0-1-1",
               },
               {
                 title: "Child Node3",
-                value: "0-1-2",
                 key: "0-1-2",
               },
             ],
@@ -567,43 +538,37 @@ export default () => (
       title="选择框"
       dataSource={[
         {
-          label: "选项1",
-          value: 1,
+          title: "选项1",
+          key: 1,
           children: [
             {
               title: "Child Node1",
-              value: "0-0-0",
               key: "0-0-0",
             },
             {
               title: "Child Node2",
-              value: "0-0-1",
               key: "0-0-1",
             },
             {
               title: "Child Node3",
-              value: "0-0-2",
               key: "0-0-2",
             },
           ],
         },
         {
-          label: "选项2",
-          value: 2,
+          title: "选项2",
+          key: 2,
           children: [
             {
               title: "Child Node3",
-              value: "0-1-0",
               key: "0-1-0",
             },
             {
               title: "Child Node4",
-              value: "0-1-1",
               key: "0-1-1",
             },
             {
               title: "Child Node5",
-              value: "0-1-2",
               key: "0-1-2",
             },
           ],
@@ -641,7 +606,7 @@ import { action } from "@formily/reactive";
 
 const useAsyncDataSource = (
   pattern: FormPathPattern,
-  service: (field: FieldType) => Promise<{ label: string; value: any }[]>
+  service: (field: FieldType) => Promise<{ title: string; key: any }[]>
 ) => {
   onFieldReact(pattern, (field) => {
     field.loading = true;
@@ -661,91 +626,79 @@ const form = createForm({
       if (!linkage) return [];
       return new Promise((resolve) => {
         setTimeout(() => {
-          if (linkage === 1) {
+          if (linkage == 1) {
             resolve([
               {
-                label: "AAA",
-                value: "aaa",
+                title: "AAA",
+                key: "aaa",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-0-0",
                     key: "0-0-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-0-1",
                     key: "0-0-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-0-2",
                     key: "0-0-2",
                   },
                 ],
               },
               {
-                label: "BBB",
-                value: "ccc",
+                title: "BBB",
+                key: "ccc",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-1-0",
                     key: "0-1-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-1-1",
                     key: "0-1-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-1-2",
                     key: "0-1-2",
                   },
                 ],
               },
             ]);
-          } else if (linkage === 2) {
+          } else if (linkage == 2) {
             resolve([
               {
-                label: "CCC",
-                value: "ccc",
+                title: "CCC",
+                key: "ccc",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-0-0",
                     key: "0-0-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-0-1",
                     key: "0-0-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-0-2",
                     key: "0-0-2",
                   },
                 ],
               },
               {
-                label: "DDD",
-                value: "ddd",
+                title: "DDD",
+                key: "ddd",
                 children: [
                   {
                     title: "Child Node1",
-                    value: "0-1-0",
                     key: "0-1-0",
                   },
                   {
                     title: "Child Node2",
-                    value: "0-1-1",
                     key: "0-1-1",
                   },
                   {
                     title: "Child Node3",
-                    value: "0-1-2",
                     key: "0-1-2",
                   },
                 ],

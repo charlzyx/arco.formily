@@ -41,7 +41,7 @@ const mapDateFormat = function (
     if (mode === "month") {
       return "YYYY-MM";
     } else if (mode === "quarter") {
-      return "YYYY-\\QQ";
+      return "YYYY-[Q]Q";
     } else if (mode === "year") {
       return "YYYY";
     } else if (mode === "week") {
@@ -49,12 +49,21 @@ const mapDateFormat = function (
     }
     return props["showTime"] ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD";
   };
+
   return (props: any) => {
+    const mode = pickermode || props.mode;
+    // FIXME
+    if (mode == "quarter") {
+      return {
+        props,
+      };
+    }
+
     const format = props["format"] || getDefaultFormat(props);
     const onChange = props.onChange;
     return {
       ...props,
-      format: format,
+      format,
       value: momentable(props.value, format === "gggg-wo" ? "gggg-ww" : format),
       onChange: (value: dayjs.Dayjs | dayjs.Dayjs[]) => {
         if (onChange) {
@@ -79,24 +88,24 @@ DatePicker.RangePicker = connect(
 
 DatePicker.WeekPicker = connect(
   ArcoDatePicker.WeekPicker,
-  mapProps(mapDateFormat()),
+  mapProps(mapDateFormat("week")),
   mapReadPretty(PreviewText.DatePicker)
 );
 
 DatePicker.MonthPicker = connect(
   ArcoDatePicker.MonthPicker,
-  mapProps(mapDateFormat()),
+  mapProps(mapDateFormat("month")),
   mapReadPretty(PreviewText.DatePicker)
 );
 
 DatePicker.QuarterPicker = connect(
   ArcoDatePicker.QuarterPicker,
-  mapProps(mapDateFormat()),
+  mapProps(mapDateFormat("quarter")),
   mapReadPretty(PreviewText.DatePicker)
 );
 DatePicker.YearPicker = connect(
   ArcoDatePicker.YearPicker,
-  mapProps(mapDateFormat()),
+  mapProps(mapDateFormat("year")),
   mapReadPretty(PreviewText.DatePicker)
 );
 

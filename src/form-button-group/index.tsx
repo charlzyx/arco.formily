@@ -11,6 +11,8 @@ import { BaseItem, IFormItemProps } from "../form-item";
 import { usePrefixCls } from "../__builtins__";
 import StickyBox from "react-sticky-box";
 import cls from "classnames";
+import "./style";
+import { useFormLayout } from "../form-layout";
 interface IStickyProps extends React.ComponentProps<typeof StickyBox> {
   align?: React.CSSProperties["textAlign"];
 }
@@ -87,10 +89,12 @@ FormButtonGroup.defaultProps = {
 };
 
 FormButtonGroup.FormItem = ({ gutter, ...props }) => {
+  const formLayout = useFormLayout();
+  const layout = props.layout || formLayout;
   return (
     <BaseItem
+      label={layout === "vertical" ? undefined : ""}
       {...props}
-      label=" "
       style={{
         margin: 0,
         padding: 0,

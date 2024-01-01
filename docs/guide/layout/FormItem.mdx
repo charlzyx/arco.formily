@@ -216,6 +216,9 @@ export default () => {
           description="描述描述"
           x-decorator="FormItem"
           x-component="Input"
+          x-component-props={{
+            placeholder: "暂未支持"
+          }}
           x-decorator-props={{
             labelWidth: 300,
             tooltip: "提示提示",
@@ -270,6 +273,9 @@ export default () => {
           title="内容左对齐(wrapperAlign=left默认)"
           x-decorator="FormItem"
           x-component="Input"
+          x-component-props={{
+            placeholder: "暂未支持"
+          }}
           x-decorator-props={{
             labelWidth: 300,
             wrapperWidth: 240,
@@ -280,6 +286,9 @@ export default () => {
           title="内容右对齐(wrapperAlign=right)"
           x-decorator="FormItem"
           x-component="Input"
+          x-component-props={{
+            placeholder: "暂未支持"
+          }}
           x-decorator-props={{
             labelWidth: 300,
             wrapperWidth: 240,
@@ -298,18 +307,24 @@ export default () => {
 
         <SchemaField.Void
           x-component="Title"
-          x-component-props={{ text: "是否撑满" }}
+          x-component-props={{ text: "是否撑满:暂未支持" }}
         />
 
         <SchemaField.String
           title="默认不撑满(fullness=false)"
           x-decorator="FormItem"
+          x-component-props={{
+            placeholder: "暂未支持"
+          }}
           x-component="Select"
         />
         <SchemaField.String
           title="撑满(fullness=true)"
           x-decorator="FormItem"
           x-component="Select"
+          x-component-props={{
+            placeholder: "暂未支持"
+          }}
           x-decorator-props={{
             fullness: true,
           }}
@@ -324,8 +339,12 @@ export default () => {
           title="必填星号"
           x-decorator="FormItem"
           x-component="Input"
+          x-component-props={{
+            placeholder: "asterisk 暂未支持"
+          }}
+          required
           x-decorator-props={{
-            asterisk: true,
+            // asterisk: true,
             labelCol: 6,
             wrapperCol: 10,
           }}
@@ -357,7 +376,7 @@ export default () => {
           x-decorator="FormItem"
           x-component="Input"
           x-decorator-props={{
-            feedbackText: "feedbackText",
+            help: "help",
             labelCol: 6,
             wrapperCol: 10,
           }}
@@ -368,7 +387,7 @@ export default () => {
           x-decorator="FormItem"
           x-component="Input"
           x-decorator-props={{
-            feedbackText: "feedbackText",
+            help: "help",
             extra: "extra",
             labelCol: 6,
             wrapperCol: 10,
@@ -404,11 +423,13 @@ export default () => {
   return (
     <ConfigProvider >
       <p>
-        Required Mark：
+        Required Mark： 暂未支持
         <Radio.Group
           value={requiredMark}
           type="button"
-          onChange={(e) => setRequiredMark(e.target.value)}
+          onChange={(v) => {
+            setRequiredMark(v)
+          }}
         >
           <Radio value="optional">optional</Radio>
           <Radio value={true}>true</Radio>
@@ -458,7 +479,7 @@ export default () => {
 };
 ```
 
-## 无边框案例
+## 无边框案例: 暂未支持
 
 设置去除组件边框
 
@@ -799,12 +820,12 @@ export default () => {
         />
 
         <SchemaField.String
-          title="加载状态(feedbackStatus=pending)"
+          title="加载状态(feedbackStatus=validating)"
           x-decorator="FormItem"
           x-component="Input"
           description="description"
           x-decorator-props={{
-            feedbackStatus: "pending",
+            feedbackStatus: "validating",
             feedbackIcon: <LoadingOutlined style={{ color: "#1890ff" }} />,
           }}
         />
@@ -1011,6 +1032,7 @@ import {
   FormItem,
   NumberPicker,
   Switch,
+  FormLayout
 } from "formily-arco-react";
 import { createForm, onFieldChange } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
@@ -1026,6 +1048,7 @@ const SchemaField = createSchemaField({
     DatePicker,
     NumberPicker,
     Switch,
+    FormLayout,
     Radio,
     FormItem,
     Div,
@@ -1038,11 +1061,11 @@ const form = createForm({
   },
   effects: () => {
     onFieldChange("size", ["value"], (field, form) => {
-      form.setFieldState("sizeWrap.*", (state) => {
-        if (state.decorator[1]) {
-          state.decorator[1].size = field.value;
-        }
-      });
+      const layout = form.query('sizeWrap').take();
+      if (!layout) return;
+      console.log('layout', layout)
+      layout.componentProps.size = field.value;
+
     });
   },
 });
@@ -1051,18 +1074,22 @@ export default () => {
   return (
     <FormProvider form={form}>
       <SchemaField>
-        <SchemaField.String
-          name="size"
-          title="Radio.Group"
-          x-decorator="FormItem"
-          x-component="Radio.Group"
-          enum={[
-            { value: "small", label: "Small" },
-            { value: "default", label: "Default" },
-            { value: "large", label: "Large" },
-          ]}
-        />
-        <SchemaField.Void name="sizeWrap" x-component="Div">
+        <SchemaField.Void name="sizeWrap" x-component="FormLayout">
+          <SchemaField.String
+            name="size"
+            title="Radio.Group"
+            x-decorator="FormItem"
+            x-component="Radio.Group"
+            x-component-props={{
+              type: 'button',
+            }}
+            enum={[
+              { value: "mini", label: "mini" },
+              { value: "small", label: "small" },
+              { value: "default", label: "sefault" },
+              { value: "large", label: "large" },
+            ]}
+          />
           <SchemaField.String
             name="input"
             title="Input"

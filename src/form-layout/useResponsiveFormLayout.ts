@@ -25,13 +25,13 @@ interface ICalcBreakpointIndex {
   (originalBreakpoints: number[], width: number): number;
 }
 
+/** @ts-ignore */
 const calcBreakpointIndex: ICalcBreakpointIndex = (breakpoints, width) => {
   for (let i = 0; i < breakpoints.length; i++) {
     if (width <= breakpoints[i]) {
       return i;
     }
   }
-  return 0;
 };
 
 const calcFactor = <T>(value: T | T[], breakpointIndex: number): T => {
@@ -52,6 +52,7 @@ const calculateProps = <T>(
 ) => {
   if (!target) return props as IComputedProps & T;
   const { clientWidth } = target;
+  console.log("clientWidth", clientWidth);
   const {
     breakpoints,
     layout,

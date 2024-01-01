@@ -122,9 +122,9 @@ const Select: React.FC<React.PropsWithChildren<SelectProps>> = observer(
       });
     };
     return (
-      <div className={cls(prefixCls, props.className)} style={props.style}>
+      <Space className={cls(prefixCls, props.className)} style={props.style}>
         {getLabels()}
-      </div>
+      </Space>
     );
   }
 );
@@ -200,9 +200,9 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
       });
     };
     return (
-      <div className={cls(prefixCls, props.className)} style={props.style}>
+      <Space className={cls(prefixCls, props.className)} style={props.style}>
         {getLabels()}
-      </div>
+      </Space>
     );
   }
 );
