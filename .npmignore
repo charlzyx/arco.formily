@@ -1,0 +1,6 @@
+src/
+node_modeuls/
+bun.lockb
+*.png
+rsbuild.config.ts
+rspress.config.ts

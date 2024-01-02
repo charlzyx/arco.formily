@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "paths": {
-      "formily-arco-react": ["./src/*"]
+      "arco.formily": ["./src/*"]
     },
   },
   "include": ["src"]

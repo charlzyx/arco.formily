@@ -5,7 +5,11 @@
     "activeMatch": "/guide/"
   },
   {
-    "text": "API",
-    "link": "https://rspress.dev/api/index.html"
+    "text": "formily",
+    "link": "https://formilyjs.org/"
+  },
+  {
+    "text": "arco.design",
+    "link": "https://arco.design/"
   }
 ]

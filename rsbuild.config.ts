@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [pluginReact()],
   source: {
     alias: {
-      "formily-arco-react": path.resolve(__dirname, "./src"),
+      "arco.formily": path.resolve(__dirname, "./src"),
       "@arco-design/web-react": path.resolve(
         __dirname,
         "node_modules/@arco-design/web-react"

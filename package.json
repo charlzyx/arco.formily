@@ -1,7 +1,6 @@
 {
-  "name": "formily-arco-react",
-  "version": "1.0.0",
-  "private": true,
+  "name": "arco.formily",
+  "version": "0.0.1",
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
