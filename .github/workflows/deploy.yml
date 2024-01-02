@@ -24,21 +24,21 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
-      - uses: pnpm/action-setup@v2 # pnpm is optional but recommended, you can also use npm / yarn
-        with:
-          version: 6
+      # - uses: pnpm/action-setup@v2 # pnpm is optional but recommended, you can also use npm / yarn
+      #   with:
+      #     version: 6
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: pnpm
+          node-version: 16
+          cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
       - name: Build with Rspress
         run: |
-          pnpm run build
+          yarn run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
