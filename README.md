@@ -2,7 +2,7 @@
 
 ![welcome](come.png)
 
-## 这是一个 **UNOFFICAL** 的, `@formily/@arco-design/web-react`
+## 这是一个 **UNOFFICAL** 的, `@formily/arco`
 
 官方的在这里 [https://github.com/formilyjs/arco](https://github.com/formilyjs/arco) ~你没看错, 就是空的嗯~
 
