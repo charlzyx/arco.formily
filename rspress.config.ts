@@ -4,6 +4,7 @@ import RsBuildConfig from "./rsbuild.config";
 import { pluginPreview } from "@rspress/plugin-preview";
 
 export default defineConfig({
+  base: "/arco.formily/",
   plugins: [pluginPreview()],
   root: path.join(__dirname, "docs"),
   title: "arco.formily",
