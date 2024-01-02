@@ -16,18 +16,27 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@formily/grid": "^2.3.1",
-    "@types/react-transition-group": "^4.4.10",
     "classnames": "^2.5.0",
-    "mfetch": "^0.2.27",
     "react-sortable-hoc": "^2.0.0",
     "react-sticky-box": "^2.0.5",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "rollup": "^4.9.2"
+  },
+  "peerDependencies": {
+    "@arco-design/web-react": "2.*",
+    "@formily/core": "2.*",
+    "@formily/grid": "2.*",
+    "@formily/react": "2.*",
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "devDependencies": {
+    "@types/react-transition-group": "^4.4.10",
+    "mfetch": "^0.2.27",
     "@arco-design/web-react": "^2.57.2",
     "@arco-plugins/unplugin-react": "^1.0.0-alpha.1",
     "@formily/core": "^2.3.1",
+    "@formily/grid": "^2.3.1",
     "@formily/react": "^2.3.1",
     "@rsbuild/core": "^0.2.13",
     "@rsbuild/plugin-react": "^0.2.13",

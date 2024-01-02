@@ -10,6 +10,7 @@ export default defineConfig({
   title: "arco.formily",
   description: "Formily Components Adaptor of Arco Design React",
   icon: "/logo.png",
+  globalStyles: path.join(__dirname, './docs/style.css'),
   logo: {
     light: "/logo.png",
     dark: "/logo.png",

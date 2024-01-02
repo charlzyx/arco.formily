@@ -41,7 +41,7 @@ function toggleWarning(skip: boolean) {
   }
 }
 
-const MARK = '__antd_mobile_root__'
+const MARK = '__byte_mobile_root__'
 
 // ========================== Render ==========================
 type ContainerType = (Element | DocumentFragment) & {

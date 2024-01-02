@@ -4,7 +4,6 @@ import {
   RadioGroupProps,
   RadioProps,
 } from "@arco-design/web-react";
-// import { RadioProps, RadioGroupProps } from "antd/lib/radio";
 import { PreviewText } from "../preview-text";
 
 type ComposedRadio = React.FC<React.PropsWithChildren<RadioProps<any>>> & {

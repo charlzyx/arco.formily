@@ -1,4 +1,4 @@
-import { ArrayBase as AntdArrayBase } from "../../array-base";
+import { ArrayBase as ArcoArrayBase } from "../../array-base";
 import type {
   ArrayField,
   FieldDisplayTypes,
@@ -17,7 +17,7 @@ import React from "react";
 
 import { isAdditionComponent, isColumnComponent } from "./utils";
 
-const ArrayBase = AntdArrayBase as Required<typeof AntdArrayBase>;
+const ArrayBase = ArcoArrayBase as Required<typeof ArcoArrayBase>;
 
 export interface ObservableColumnSource {
   field: GeneralField;
