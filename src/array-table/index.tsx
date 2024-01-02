@@ -21,9 +21,6 @@ import "./style";
 
 type IQueryTableProps = React.ComponentProps<typeof Table>;
 
-export const showTotal = (total: number, range: number[]) =>
-  `第 ${range[-1]}-${range[1]} 条, 共 ${total} 条数据`;
-
 const usePage = (dataSource: any[], page: IQueryTableProps["pagination"]) => {
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(
@@ -47,12 +44,13 @@ const usePage = (dataSource: any[], page: IQueryTableProps["pagination"]) => {
       <div className={cls}>
         {total > pageSize ? (
           <Pagination
-            size="small"
-            total={total}
-            current={current}
             showTotal
             showJumper
             sizeCanChange
+            size="small"
+            {...(page as object)}
+            total={total}
+            current={current}
             onPageSizeChange={setPageSize}
             onChange={setCurrent}
           />
@@ -64,7 +62,6 @@ const usePage = (dataSource: any[], page: IQueryTableProps["pagination"]) => {
   return {
     slice: dataSource.slice(startIndex, endIndex),
     renderPage,
-    pageSize,
   };
 };
 
@@ -78,7 +75,7 @@ export const ArrayTable: React.FC<IQueryTableProps> &
   const field = useField<ArrayField>();
 
   const dataSource = Array.isArray(field.value) ? field.value.slice() : [];
-  const { slice, renderPage, pageSize } = usePage(dataSource, props.pagination);
+  const { slice, renderPage } = usePage(dataSource, props.pagination);
 
   const defaultRowKey = (record: any) => {
     return dataSource.indexOf(record);

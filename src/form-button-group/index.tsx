@@ -93,7 +93,7 @@ FormButtonGroup.FormItem = ({ gutter, ...props }) => {
   const layout = props.layout || formLayout;
   return (
     <BaseItem
-      label={layout === "vertical" ? undefined : ""}
+      label=" "
       {...props}
       style={{
         margin: 0,

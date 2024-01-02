@@ -37,6 +37,8 @@ export interface IFormilyLayoutContext
   gridColumnGap?: number;
   gridRowGap?: number;
   spaceGap?: SpaceProps["size"];
+  // item 增强
+  tooltipLayout?: "icon" | "text";
 }
 
 export interface IFormilyLayoutProps extends IFormilyLayoutContext {}
@@ -80,7 +82,7 @@ export const FormLayout: React.FC<
     className
   );
   const renderChildren = () => {
-    const newDeepLayout = {
+    const newDeepLayout: IFormilyLayoutContext = {
       ...deepLayout,
     };
     if (!shallow) {

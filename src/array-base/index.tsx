@@ -1,7 +1,7 @@
 import {
   IconCopy as CopyOutlined,
   IconDelete as DeleteOutlined,
-  IconDownCircle as DownOutlined,
+  IconDown as DownOutlined,
   IconDragDotVertical,
   IconPlus as PlusOutlined,
   IconUp as UpOutlined,
@@ -72,8 +72,8 @@ export interface IArrayBaseProps {
 
 type ComposedArrayBase = React.FC<React.PropsWithChildren<IArrayBaseProps>> &
   ArrayBaseMixins & {
-    Item?: React.FC<React.PropsWithChildren<IArrayBaseItemProps>>;
-    mixin?: <T extends JSXComponent>(target: T) => T & ArrayBaseMixins;
+    Item: React.FC<React.PropsWithChildren<IArrayBaseItemProps>>;
+    mixin: <T extends JSXComponent>(target: T) => T & ArrayBaseMixins;
   };
 
 const ArrayBaseContext = createContext<IArrayBaseContext>(null!);

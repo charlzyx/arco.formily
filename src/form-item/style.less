@@ -1,15 +1,134 @@
 @import './grid.less';
+@import (reference) '@arco-design/web-react/es/Form/style/token.less';
 
-// .arco-formily-item {
-//   width: 100%;
-// }
+@form-item-cls: ~'arco-formily-item';
 
-.arco-formily-item-wrapper {
+.@{form-item-cls}-layout-wrapper {
   max-width: 100%;
-  // flex: 1;
+  flex: 1;
+  display: flex;
+
+  > .arco-form-item-wrapper {
+    width: 100%;
+  }
 }
+
 .arco-form-item-symbol-formily {
   width: 12px;
   height: 12px;
   display: inline-block;
+}
+
+
+
+.@{form-item-cls} {
+  width: auto;
+  &-component {
+    position: relative;
+  }
+
+  &-addon-before {
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    // min-height: @height-base;
+    flex-shrink: 0;
+  }
+
+  &-addon-after {
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    // min-height: @height-base;
+    flex-shrink: 0;
+  }
+
+  &-asterisk-at-start {
+    color: @form-color-tip-text_error;
+    margin-right: 4px;
+    display: inline-block;
+    font-family: SimSun, sans-serif;
+  }
+
+  &-asterisk-at-end {
+    color: @form-color-tip-text_error;
+    margin-left: 4px;
+    display: inline-block;
+    font-family: SimSun, sans-serif;
+  }
+
+  &-optional {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  &-colon {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+}
+
+.@{form-item-cls}-label {
+  position: relative;
+  display: flex;
+  color: @form-color-text-label;
+
+  &-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-tooltip {
+    cursor: help;
+
+    * {
+      cursor: help;
+    }
+
+    label {
+      border-bottom: 1px dashed currentColor;
+    }
+  }
+}
+
+.@{form-item-cls}-label-align-left {
+  > .@{form-item-cls}-label {
+    justify-content: flex-start;
+  }
+}
+
+.@{form-item-cls}-label-align-right {
+  > .@{form-item-cls}-label {
+    justify-content: flex-end;
+    // fix arco-item-label padding-left
+    padding-right: 0px;
+  }
+}
+
+.@{form-item-cls}-label-wrap {
+  .@{form-item-cls}-label {
+    label {
+      white-space: pre-line;
+      word-break: break-all;
+    }
+  }
+}
+
+.@{form-item-cls}-control-align-left {
+  .@{form-item-cls}-layout-wrapper {
+    justify-content: flex-start;
+  }
+}
+.@{form-item-cls}-control-align-right {
+  .@{form-item-cls}-layout-wrapper {
+    justify-content: flex-end;
+  }
+}
+
+.@{form-item-cls}-control-wrap {
+  .@{form-item-cls}-component  {
+    white-space: pre-line;
+    word-break: break-all;
+  }
 }

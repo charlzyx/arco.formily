@@ -1,0 +1,66 @@
+// @root-entry-name: 'default';
+// @import (reference) '~antd/es/style/themes/index.less';
+// @import (reference) '@arco-design/web-react/es/style/index.less';
+@import (reference) '@arco-design/web-react/es/Card/style/token.less';
+
+@array-items-prefix-cls: ~'arco-formily-array-items';
+
+.@{array-items-prefix-cls}-item-inner {
+  visibility: visible;
+}
+
+// fix https://github.com/alibaba/formily/issues/2891
+.@{array-items-prefix-cls}-item {
+  z-index: 100000;
+}
+
+.@{array-items-prefix-cls}-card {
+  display: flex;
+  border: 1px solid @card-color-border;
+  margin-bottom: 10px;
+  padding: 3px 6px;
+  background: @card-color-bg;
+  justify-content: space-between;
+  color: @color-text-1;
+
+  arco-formily-item:not(arco-formily-item-feedback-layout-popover) {
+    margin-bottom: 0 !important;
+
+    arco-formily-item-help {
+      position: absolute;
+      font-size: 12px;
+      top: 100%;
+    background: @card-color-bg;
+      width: 100%;
+      margin-top: 3px;
+      padding: 3px;
+      z-index: 1;
+      border-radius: 3px;
+      box-shadow: 0 0 10px @card-color-border;
+    }
+  }
+}
+
+.@{array-items-prefix-cls}-divide {
+  display: flex;
+  border-bottom: 1px solid @card-color-border;
+  padding: 10px 0;
+  justify-content: space-between;
+
+  arco-formily-item:not(arco-formily-item-feedback-layout-popover) {
+    margin-bottom: 0 !important;
+
+    arco-formily-item-help {
+      position: absolute;
+      font-size: 12px;
+      top: 100%;
+      background: @card-color-bg;
+      width: 100%;
+      margin-top: 3px;
+      padding: 3px;
+      z-index: 1;
+      border-radius: 3px;
+      box-shadow: 0 0 10px @card-color-border;
+    }
+  }
+}

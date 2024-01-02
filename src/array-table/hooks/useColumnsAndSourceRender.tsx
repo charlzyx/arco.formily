@@ -43,47 +43,6 @@ const parseArrayItems = (
   }, sources);
 };
 
-const renderOperations = (
-  props: any,
-  schema: Schema,
-  index: number,
-  field: ArrayField
-) => {
-  const propLength = Object.keys(schema.properties || {}).length;
-  const max = props.maxItems || 2;
-  const menu =
-    propLength > max
-      ? schema
-          .mapProperties((propSchema, key, idx) => {
-            if (idx < max) return null;
-            return {
-              key: idx,
-              label: (
-                <RecursionField schema={propSchema} name={`${index}.${key}`} />
-              ),
-            };
-          })
-          .filter(Boolean)
-      : undefined;
-
-  return (
-    <ArrayBase.Item index={index} record={() => field?.value?.[index]}>
-      <Space size="small">
-        {schema.mapProperties((propSchema, key, idx) => {
-          if (idx >= max) return null;
-          return (
-            <RecursionField
-              key={`${index}.${key}`}
-              schema={propSchema}
-              name={`${index}.${key}`}
-            />
-          );
-        })}
-      </Space>
-    </ArrayBase.Item>
-  );
-};
-
 export const useColumnsAndSourceRender = (arrayField: ArrayField) => {
   const schema = useFieldSchema();
   const parseSources = (subSchema: Schema): ObservableColumnSource[] => {

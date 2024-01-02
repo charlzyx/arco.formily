@@ -1,5 +1,6 @@
 import {
   FormItemProps as ArcoFormItemProps,
+  ConfigProvider,
   Space,
   Tooltip,
   TooltipProps,
@@ -12,9 +13,10 @@ import {
   IconQuestionCircle,
 } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
+import { useOverflow } from "./useOverflow";
 import { isObj, isUndef } from "@formily/shared";
 import cls from "classnames";
-import React, { ReactNode, useCallback } from "react";
+import React, { ReactNode, useCallback, useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 import { pickDataProps, usePrefixCls } from "../__builtins__";
 import {
@@ -23,6 +25,7 @@ import {
   useFormLayout,
 } from "../form-layout";
 import "./style";
+import { useField } from "@formily/react";
 
 export interface IFormItemProps
   extends Omit<
@@ -42,16 +45,22 @@ export interface IFormItemProps
   // formily field 模型
   feedbackStatus?: Field["validateStatus"];
   feedbackText?: string | string[];
+  tooltipLayout?: "icon" | "text";
+  labelFor?: string;
+  addonBefore?: string | React.ReactNode;
+  addonAfter?: string | React.ReactNode;
 }
 
-const useFormItemLayout = (props: IFormilyLayoutProps) => {
+const usePropsWithFormLayout = (props: IFormItemProps) => {
   const layout = useFormLayout();
   const layoutType = props.layout ?? layout.layout ?? "horizontal";
-  const labelAlign =
-    layoutType === "vertical"
-      ? props.labelAlign ?? "left"
-      : props.labelAlign ?? layout.labelAlign ?? "left";
-  return {
+  let requiredSymbol = props.requiredSymbol ?? layout.requiredSymbol;
+
+  if (props.requiredSymbol === true && isObj(layout.requiredSymbol)) {
+    requiredSymbol = layout.requiredSymbol;
+  }
+
+  const final: IFormItemProps = {
     ...props,
     layout: layoutType,
     colon: props.colon ?? layout.colon,
@@ -67,53 +76,12 @@ const useFormItemLayout = (props: IFormilyLayoutProps) => {
     wrapperAlign: props.wrapperAlign ?? layout.wrapperAlign,
     wrapperWrap: props.wrapperWrap ?? layout.wrapperWrap,
     size: props.size ?? layout.size,
-    // fullness: props.fullness ?? layout.fullness,
-    // inset: props.inset ?? layout.inset,
-    // asterisk: props.asterisk,
-    // requiredMark: layout.requiredMark,
-    // optionalMarkHidden: props.optionalMarkHidden,
-    // bordered: props.bordered ?? layout.bordered,
-    // feedbackIcon: props.feedbackIcon,
-    // feedbackLayout: props.feedbackLayout ?? layout.feedbackLayout ?? "loose",
-    // tooltipLayout: props.tooltipLayout ?? layout.tooltipLayout ?? "icon",
-    // tooltipIcon: props.tooltipIcon ?? layout.tooltipIcon ?? (
-    //   <QuestionCircleOutlined />
-    // ),
+    tooltipLayout: props.tooltipLayout ?? layout.tooltipLayout ?? "icon",
+    requiredSymbol,
   };
+  return final;
 };
 export const ID_SUFFIX = "_input";
-
-// function useOverflow<
-//   Container extends HTMLElement,
-//   Content extends HTMLElement
-// >() {
-//   const [overflow, setOverflow] = useState(false);
-//   const containerRef = useRef<Container>(null);
-//   const contentRef = useRef<Content>(null);
-//   const layout = useFormLayout();
-//   const labelCol = JSON.stringify(layout.labelCol);
-
-//   useEffect(() => {
-//     requestAnimationFrame(() => {
-//       if (containerRef.current && contentRef.current) {
-//         const contentWidth = contentRef.current.getBoundingClientRect().width;
-//         const containerWidth =
-//           containerRef.current.getBoundingClientRect().width;
-//         if (contentWidth && containerWidth && containerWidth < contentWidth) {
-//           if (!overflow) setOverflow(true);
-//         } else {
-//           if (overflow) setOverflow(false);
-//         }
-//       }
-//     });
-//   }, [labelCol]);
-
-//   return {
-//     overflow,
-//     containerRef,
-//     contentRef,
-//   };
-// }
 
 // 错误提示文字
 const FormItemTip: React.FC<
@@ -153,129 +121,42 @@ const FormItemTip: React.FC<
   );
 };
 
-interface FormItemLabelProps
-  extends Pick<
-    IFormItemProps,
-    "tooltip" | "label" | "requiredSymbol" | "required" | "rules"
-  > {
-  showColon: boolean | ReactNode;
-  prefix: string;
-  htmlFor?: string;
-}
-
-// 标签
-const FormItemLabel: React.FC<FormItemLabelProps> = ({
-  htmlFor,
-  showColon,
-  label,
-  requiredSymbol = true,
-  required,
-  prefix,
-  tooltip,
-}) => {
-  const symbolPosition = isObj(requiredSymbol)
-    ? requiredSymbol?.position
-    : "start";
-
-  const symbolNode = required && !!requiredSymbol && (
-    <strong className={`${prefix}-item-symbol ${prefix}-item-symbol-formily`}>
-      <svg fill="currentColor" viewBox="0 0 1024 1024" width="1em" height="1em">
-        <path d="M583.338667 17.066667c18.773333 0 34.133333 15.36 34.133333 34.133333v349.013333l313.344-101.888a34.133333 34.133333 0 0 1 43.008 22.016l42.154667 129.706667a34.133333 34.133333 0 0 1-21.845334 43.178667l-315.733333 102.4 208.896 287.744a34.133333 34.133333 0 0 1-7.509333 47.786666l-110.421334 80.213334a34.133333 34.133333 0 0 1-47.786666-7.509334L505.685333 706.218667 288.426667 1005.226667a34.133333 34.133333 0 0 1-47.786667 7.509333l-110.421333-80.213333a34.133333 34.133333 0 0 1-7.509334-47.786667l214.186667-295.253333L29.013333 489.813333a34.133333 34.133333 0 0 1-22.016-43.008l42.154667-129.877333a34.133333 34.133333 0 0 1 43.008-22.016l320.512 104.106667L412.672 51.2c0-18.773333 15.36-34.133333 34.133333-34.133333h136.533334z" />
-      </svg>
-    </strong>
-  );
-
-  const renderTooltip = () => {
-    if (!tooltip) {
-      return null;
-    }
-    const tooltipIconClassName = `${prefix}-item-tooltip`;
-    let tooltipProps: TooltipProps = {};
-    let tooltipIcon = <IconQuestionCircle className={tooltipIconClassName} />;
-    if (!isObj(tooltip) || React.isValidElement(tooltip)) {
-      tooltipProps = {
-        content: tooltip,
-      };
-    } else {
-      const { icon, ...rest } = tooltip as TooltipProps & {
-        icon?: React.ReactElement;
-      };
-      tooltipProps = rest;
-      if (icon) {
-        tooltipIcon = React.isValidElement(icon)
-          ? React.cloneElement(icon as React.ReactElement, {
-              className: cls(
-                tooltipIconClassName,
-                (icon as React.ReactElement).props.className
-              ),
-            })
-          : icon;
-      }
-    }
-    return <Tooltip {...tooltipProps}>{tooltipIcon}</Tooltip>;
-  };
-
-  return label ? (
-    <label htmlFor={htmlFor && `${htmlFor}${ID_SUFFIX}`}>
-      {symbolPosition !== "end" && symbolNode} {label}
-      {renderTooltip()}
-      {symbolPosition === "end" && <> {symbolNode}</>}
-      {showColon ? (showColon === true ? ":" : showColon) : ""}
-    </label>
-  ) : (
-    <label htmlFor={htmlFor && `${htmlFor}${ID_SUFFIX}`}>&nbsp;</label>
-  );
-};
-
 export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
   children,
   ...props
 }) => {
-  const formLayout = useFormItemLayout(props);
+  const layoutProps = usePropsWithFormLayout(props);
 
-  // const { containerRef, contentRef, overflow } = useOverflow<
-  //   HTMLDivElement,
-  //   HTMLSpanElement
-  // >();
   const {
     label,
     style,
     layout,
     colon = true,
-    // addonBefore,
-    // addonAfter,
-    // asterisk,
+    addonBefore,
+    addonAfter,
     requiredSymbol,
-    // optionalMarkHidden = false,
     feedbackStatus,
     feedbackText,
     extra,
-    // fullness,
-    // feedbackLayout,
-    // feedbackIcon,
-    // enableOutlineFeedback = true,
-    // getPopupContainer,
-    // inset,
-    // bordered = true,
+    labelFor,
     labelWidth,
     wrapperWidth,
     labelCol,
     wrapperCol,
     labelAlign,
-    required,
     hidden,
-    // wrapperAlign = "left",
-    // labelWrap,
+    wrapperAlign = "left",
+    labelWrap,
+    wrapperWrap,
     size,
-    // wrapperWrap,
-    // tooltipLayout,
+    tooltipLayout,
     tooltip,
+  } = layoutProps;
 
-    // tooltipIcon,
-  } = { ...formLayout, ...props };
-
-  const labelStyle = { ...formLayout.labelStyle };
-  const wrapperStyle = { ...formLayout.wrapperStyle };
+  const labelStyle = { ...layoutProps.labelStyle };
+  const wrapperStyle = { ...layoutProps.wrapperStyle };
+  const { containerRef, contentRef, overflow } = useOverflow();
+  const field = useField();
   // 固定宽度
   let enableCol = false;
   if (labelWidth || wrapperWidth) {
@@ -297,12 +178,115 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
   }
 
   const prefixCls = usePrefixCls("form");
-  const fomrilyPrefixCls = usePrefixCls("formily-item");
+  const formilyItemPrefixCls = usePrefixCls("formily-item");
 
   const gridStyles: React.CSSProperties = {};
 
-  const classNames = cls(
-    // fomrilyPrefixCls,
+  const tooltipIconClassName = usePrefixCls("form-item-tooltip");
+
+  const getOverflowTooltip = () => {
+    const renderTooltip = () => {
+      if (!tooltip) {
+        return null;
+      }
+      let tooltipProps: TooltipProps = {};
+      let tooltipIcon = <IconQuestionCircle className={tooltipIconClassName} />;
+      if (!isObj(tooltip) || React.isValidElement(tooltip)) {
+        tooltipProps = {
+          content: tooltip,
+        };
+      } else {
+        const { icon, ...rest } = tooltip as TooltipProps & {
+          icon?: React.ReactElement;
+        };
+        tooltipProps = rest;
+        if (icon) {
+          tooltipIcon = React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement, {
+                className: cls(
+                  tooltipIconClassName,
+                  (icon as React.ReactElement).props.className
+                ),
+              })
+            : icon;
+        }
+      }
+      return <Tooltip {...tooltipProps}>{tooltipIcon}</Tooltip>;
+    };
+    if (overflow) {
+      return (
+        <div>
+          <div>{label}</div>
+          <div>{renderTooltip()}</div>
+        </div>
+      );
+    }
+    return renderTooltip();
+  };
+
+  const renderLabelText = () => {
+    const labelChildren = (
+      <div
+        className={`${formilyItemPrefixCls}-label-content`}
+        ref={containerRef as any}
+      >
+        <span ref={contentRef}>
+          {requiredSymbol && (requiredSymbol as any)?.position !== "end" && (
+            <span className={`${formilyItemPrefixCls}-asterisk-at-start`}>
+              {"*"}
+            </span>
+          )}
+          <label
+            htmlFor={labelFor}
+            style={{
+              whiteSpace: label === " " ? "break-spaces" : undefined,
+            }}
+          >
+            {label}
+          </label>
+          {isObj(requiredSymbol) && requiredSymbol?.position === "end" && (
+            <span className={`${formilyItemPrefixCls}-asterisk-at-end`}>
+              {"*"}
+            </span>
+          )}
+        </span>
+      </div>
+    );
+
+    if ((tooltipLayout === "text" && tooltip) || overflow) {
+      return (
+        <Tooltip position="top" content={getOverflowTooltip()}>
+          {labelChildren}
+        </Tooltip>
+      );
+    }
+    return labelChildren;
+  };
+  const renderLabel = () => {
+    if (!label) return null;
+    return (
+      <div
+        className={cls({
+          [`${prefixCls}-label-item`]: true,
+          [`${formilyItemPrefixCls}-label`]: true,
+          [`${formilyItemPrefixCls}-label-tooltip`]:
+            (tooltip && tooltipLayout === "text") || overflow,
+          [`${formilyItemPrefixCls}-col-${labelCol}`]: enableCol && !!labelCol,
+        })}
+        style={labelStyle}
+      >
+        {renderLabelText()}
+        {label !== " " && (
+          <span className={`${formilyItemPrefixCls}-colon`}>
+            {colon ? ":" : ""}
+          </span>
+        )}
+      </div>
+    );
+  };
+
+  const itemCls = cls(
+    formilyItemPrefixCls,
     `${prefixCls}-item`,
     {
       [`${prefixCls}-size-${size}`]: size,
@@ -313,14 +297,21 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
       [`${prefixCls}-item-has-help`]: feedbackText,
       [`${prefixCls}-item-hidden`]: hidden,
       [`${prefixCls}-item-has-feedback`]: feedbackStatus && props.hasFeedback,
+      [`${formilyItemPrefixCls}-label-align-${labelAlign}`]: true,
+      [`${formilyItemPrefixCls}-control-align-${wrapperAlign}`]: true,
+      [`${formilyItemPrefixCls}-label-wrap`]: !!labelWrap,
+      [`${formilyItemPrefixCls}-control-wrap`]: !!wrapperWrap,
     },
     `${prefixCls}-layout-${layout}`,
     props.className
   );
 
-  const labelClassNames = cls(`${prefixCls}-label-item`, {
-    [`${prefixCls}-label-item-left`]: labelAlign === "left",
+  const layoutWrapperCls = cls(`${formilyItemPrefixCls}-layout-wrapper`, {
+    [`${formilyItemPrefixCls}-col-${wrapperCol}`]:
+      enableCol && !!wrapperCol && label,
   });
+
+  // item -> { label, layout-wrapper -> {wrapper,feedbackText, extra}}
 
   return (
     <div
@@ -330,79 +321,60 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
         ...gridStyles,
       }}
       data-grid-span={props.gridSpan}
-      className={classNames}
-      // onFocus={() => {
-      //   // if (feedbackIcon || inset) {
-      //   setActive(true);
-      //   // }
-      // }}
-      // onBlur={() => {
-      //   // if (feedbackIcon || inset) {
-      //   setActive(false);
-      //   // }
-      // }}
+      className={itemCls}
     >
-      {!label && layout !== "vertical" ? null : (
-        <div
-          style={labelStyle}
-          className={cls(labelClassNames, {
-            [`${prefixCls}-item-col-${labelCol}`]: enableCol && !!labelCol,
-          })}
-        >
-          <FormItemLabel
-            label={label}
-            prefix={prefixCls}
-            showColon={colon}
-            required={!!required}
-            requiredSymbol={requiredSymbol}
-            tooltip={tooltip}
-          ></FormItemLabel>
-        </div>
-      )}
-      <div
-        style={wrapperStyle}
-        className={cls(`${fomrilyPrefixCls}-wrapper`, {
-          [`${prefixCls}-item-wrapper`]: true,
-          [`${prefixCls}-item-col-${wrapperCol}`]:
-            enableCol && !!wrapperCol && label,
-        })}
-      >
-        {/* {addonBefore && (
-          <div className={cls(`${prefixCls}-addon-before`)}>{addonBefore}</div>
-        )} */}
-        <div className={cls(`${prefixCls}-item-control-wrapper`)}>
-          <div className={cls(`${prefixCls}-item-control`)}>
-            <div className={cls(`${prefixCls}-item-control-children`)}>
-              <FormLayoutShallowContext.Provider value={undefined!}>
-                {children}
-              </FormLayoutShallowContext.Provider>
-              {feedbackStatus ? (
-                <div
-                  className={`${prefixCls}-item-feedback ${prefixCls}-item-feedback-${feedbackStatus}`}
-                >
-                  {feedbackStatus === "warning" && (
-                    <IconExclamationCircleFill />
-                  )}
-                  {feedbackStatus === "success" && <IconCheckCircleFill />}
-                  {feedbackStatus === "error" && <IconCloseCircleFill />}
-                  {feedbackStatus === "validating" && <IconLoading />}
+      {!label && layout !== "vertical" ? null : renderLabel()}
+      <div className={layoutWrapperCls}>
+        <div style={wrapperStyle} className={`${prefixCls}-item-wrapper`}>
+          <div className={cls(`${prefixCls}-item-control-wrapper`)}>
+            <div className={cls(`${prefixCls}-item-control`)}>
+              {addonBefore && (
+                <div className={cls(`${formilyItemPrefixCls}-addon-before`)}>
+                  {addonBefore}
                 </div>
-              ) : null}
+              )}
+              <div className={cls(`${prefixCls}-item-control-children`)}>
+                <FormLayoutShallowContext.Provider value={undefined!}>
+                  <div
+                    className={`${formilyItemPrefixCls}-component ${
+                      field?.componentProps?.className || ""
+                    }`}
+                    style={field?.componentProps?.style}
+                  >
+                    {children}
+                    {feedbackStatus ? (
+                      <div
+                        className={`${prefixCls}-item-feedback ${prefixCls}-item-feedback-${feedbackStatus}`}
+                      >
+                        {feedbackStatus === "warning" && (
+                          <IconExclamationCircleFill />
+                        )}
+                        {feedbackStatus === "success" && (
+                          <IconCheckCircleFill />
+                        )}
+                        {feedbackStatus === "error" && <IconCloseCircleFill />}
+                        {feedbackStatus === "validating" && <IconLoading />}
+                      </div>
+                    ) : null}
+                  </div>
+                </FormLayoutShallowContext.Provider>
+              </div>
+              {addonAfter && (
+                <div className={cls(`${formilyItemPrefixCls}-addon-after`)}>
+                  {addonAfter}
+                </div>
+              )}
             </div>
           </div>
-
-          {/* {addonAfter && (
-            <div className={cls(`${prefixCls}-addon-after`)}>{addonAfter}</div>
-          )} */}
+          {!!feedbackText && (
+            <FormItemTip
+              prefixCls={prefixCls}
+              feedbackStatus={feedbackStatus}
+              feedbackText={feedbackText}
+            ></FormItemTip>
+          )}
+          {extra && <div className={cls(`${prefixCls}-extra`)}>{extra}</div>}
         </div>
-        {!!feedbackText && (
-          <FormItemTip
-            prefixCls={prefixCls}
-            feedbackStatus={feedbackStatus}
-            feedbackText={feedbackText}
-          ></FormItemTip>
-        )}
-        {extra && <div className={cls(`${prefixCls}-extra`)}>{extra}</div>}
       </div>
     </div>
   );

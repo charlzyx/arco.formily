@@ -16,7 +16,7 @@ export const FormItem: ComposeFormItem = connect(
     if (isVoidField(field))
       return {
         label: field.title || props.label,
-        // asterisk: props.asterisk,
+        requiredSymbol: props.requiredSymbol,
         extra: props.extra || field.description,
       };
     if (!field) return props;
@@ -41,20 +41,18 @@ export const FormItem: ComposeFormItem = connect(
     };
     const takeAsterisk = () => {
       if (field.required && field.pattern !== "readPretty") {
-        return true;
+        return props.requiredSymbol || true;
       }
-      // if ("asterisk" in props) {
-      //   return props.asterisk;
-      // }
+      if ("requiredSymbol" in props) {
+        return props.requiredSymbol;
+      }
       return false;
     };
     return {
       label: props.label || field.title,
       feedbackStatus: takeFeedbackStatus(),
       feedbackText: takeMessage(),
-      required: takeAsterisk(),
-      optionalMarkHidden:
-        field.pattern === "readPretty" && !("asterisk" in props),
+      requiredSymbol: takeAsterisk(),
       extra: props.extra || field.description,
     };
   })
