@@ -6,17 +6,20 @@ import { pluginPreview } from "@rspress/plugin-preview";
 export default defineConfig({
   plugins: [pluginPreview()],
   root: path.join(__dirname, "docs"),
-  title: "arco.formily React",
-  description: "Formily Impl for Arco Design React",
-  icon: "/arco.png",
+  title: "arco.formily",
+  description: "Formily Components Adaptor of Arco Design React",
+  icon: "/logo.png",
   logo: {
-    light: "/arco.png",
-    dark: "/arco.png",
+    light: "/logo.png",
+    dark: "/logo.png",
   },
   builderConfig: {
     ...(RsBuildConfig as any),
   },
   themeConfig: {
+    footer: {
+      message: "Powered by RsPress. © 2024 charlzyx All Rights Reserved.",
+    },
     socialLinks: [
       {
         icon: "github",

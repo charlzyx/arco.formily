@@ -1,8 +1,8 @@
 [
   {
-    "text": "概览",
-    "link": "/guide.html",
-    "activeMatch": "/guide/"
+    "text": "组件文档",
+    "link": "/api.html",
+    "activeMatch": "/api/"
   },
   {
     "text": "formily",

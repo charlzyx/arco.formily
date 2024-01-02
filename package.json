@@ -1,6 +1,15 @@
 {
   "name": "arco.formily",
-  "version": "0.0.1",
+  "version": "0.0.1-readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charlzyx/arco.formily"
+  },
+  "author": {
+    "name": "charlzyx",
+    "email": "charlzyx@qq.com",
+    "url": "https://github.com/charlzyx/arco.formily"
+  },
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
