@@ -14,9 +14,10 @@ import {
   TimeRangePickerProps,
   Tag,
   Space,
+  ConfigProvider,
 } from "@arco-design/web-react";
 import cls from "classnames";
-import { formatMomentValue, usePrefixCls } from "../__builtins__";
+import { formatDayjsValue, usePrefixCls } from "../__builtins__";
 
 export interface BaseOptionType {
   disabled?: boolean;
@@ -268,8 +269,14 @@ const DatePicker: React.FC<React.PropsWithChildren<DatePickerProps>> = (
 ) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
+  const { locale } = useContext(ConfigProvider.ConfigContext);
   const getLabels = () => {
-    const labels = formatMomentValue(props.value, props.format, placeholder);
+    const labels = formatDayjsValue(
+      props.value,
+      props.format,
+      locale?.dayjsLocale!,
+      placeholder
+    );
     return isArr(labels) ? labels.join("~") : labels;
   };
   return <div className={cls(prefixCls, props.className)}>{getLabels()}</div>;
@@ -280,8 +287,14 @@ const DateRangePicker: React.FC<
 > = (props) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
+  const { locale } = useContext(ConfigProvider.ConfigContext);
   const getLabels = () => {
-    const labels = formatMomentValue(props.value, props.format, placeholder);
+    const labels = formatDayjsValue(
+      props.value,
+      props.format,
+      locale?.dayjsLocale!,
+      placeholder
+    );
     return isArr(labels) ? labels.join("~") : labels;
   };
   return (
@@ -296,8 +309,14 @@ const TimePicker: React.FC<React.PropsWithChildren<TimePickerProps>> = (
 ) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
+  const { locale } = useContext(ConfigProvider.ConfigContext);
   const getLabels = () => {
-    const labels = formatMomentValue(props.value, props.format, placeholder);
+    const labels = formatDayjsValue(
+      props.value,
+      props.format,
+      locale?.dayjsLocale!,
+      placeholder
+    );
     return isArr(labels) ? labels.join("~") : labels;
   };
   return (
@@ -312,8 +331,14 @@ const TimeRangePicker: React.FC<
 > = (props) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
+  const { locale } = useContext(ConfigProvider.ConfigContext);
   const getLabels = () => {
-    const labels = formatMomentValue(props.value, props.format, placeholder);
+    const labels = formatDayjsValue(
+      props.value,
+      props.format,
+      locale?.dayjsLocale!,
+      placeholder
+    );
     return isArr(labels) ? labels.join("~") : labels;
   };
   return (

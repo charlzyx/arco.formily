@@ -14,7 +14,6 @@ import {
 } from "arco.formily";
 import { createForm } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
-import { DatePicker as ArcoDatePicker } from '@arco-design/web-react';
 
 const SchemaField = createSchemaField({
   components: {
@@ -22,20 +21,11 @@ const SchemaField = createSchemaField({
     FormItem,
   },
 });
-const QP = () => {
-  const [value, setValue] = React.useState("")
-  return <div>
-  <h1>季度选择器当前有问题 https://github.com/iamkun/dayjs/issues/2477 </h1>
-  <ArcoDatePicker.QuarterPicker value={value} onChange={(v) => {
-    setValue(v)
-  }} style={{ width: 200 }} />
-  </div>
-};
+
 const form = createForm();
 
 export default () => (
   <React.Fragment>
-  <QP />
   <FormProvider form={form}>
     <SchemaField>
       <SchemaField.String
@@ -145,22 +135,36 @@ import {
   FormItem,
   FormButtonGroup,
   Submit,
+  Switch,
 } from "arco.formily";
-import { createForm } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
-
+import { ArrayField, createForm, onFieldValueChange } from "@formily/core";
+import { ConfigProvider } from '@arco-design/web-react';
 const SchemaField = createSchemaField({
   components: {
     DatePicker,
     FormItem,
+    Switch,
   },
 });
 
-const form = createForm();
+const form = createForm({
+  effects: () => {
+    onFieldValueChange(".readPretty", (field, form) => {
+      form.readPretty = field.value;
+      field.readPretty = false;
+    });
+  },
+});
 
 const schema = {
   type: "object",
   properties: {
+    readPretty: {
+      title: "切换阅读态",
+      "x-decorator": "FormItem",
+      "x-component": "Switch",
+    },
     date: {
       title: "普通日期",
       "x-decorator": "FormItem",
@@ -253,12 +257,12 @@ const schema = {
 };
 
 export default () => (
-  <FormProvider form={form}>
-    <SchemaField schema={schema} />
-    <FormButtonGroup>
-      <Submit onSubmit={console.log}>提交</Submit>
-    </FormButtonGroup>
-  </FormProvider>
+    <FormProvider form={form}>
+      <SchemaField schema={schema} />
+      <FormButtonGroup>
+        <Submit onSubmit={console.log}>提交</Submit>
+      </FormButtonGroup>
+    </FormProvider>
 );
 ```
 

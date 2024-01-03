@@ -1,4 +1,4 @@
-export * from "./moment";
+export * from "./dayjs";
 export * from "./hooks";
 export * from "./portal";
 export * from "./loading";
