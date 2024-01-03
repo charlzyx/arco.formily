@@ -1,9 +1,8 @@
-import React from "react";
-import { connect, mapReadPretty, mapProps, ReactFC } from "@formily/react";
 import { Select as ArcoSelect, SelectProps } from "@arco-design/web-react";
-import { PreviewText } from "../preview-text";
 import { IconLoading } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
+import { ReactFC, connect, mapProps, mapReadPretty } from "@formily/react";
+import { PreviewText } from "../preview-text";
 
 export const Select: ReactFC<SelectProps> = connect(
   ArcoSelect,

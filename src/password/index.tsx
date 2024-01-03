@@ -1,8 +1,8 @@
-import React from "react";
-import { connect, mapReadPretty } from "@formily/react";
 import { Input, InputProps } from "@arco-design/web-react";
-import { PasswordStrength } from "./PasswordStrength";
+import { connect, mapReadPretty } from "@formily/react";
+import React from "react";
 import { PreviewText } from "../preview-text";
+import { PasswordStrength } from "./PasswordStrength";
 
 export interface IPasswordProps extends InputProps {
   checkStrength: boolean;

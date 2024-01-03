@@ -1,10 +1,8 @@
 import { Form as FormType, IFormFeedback, ObjectField } from "@formily/core";
 import { FormProvider, JSXComponent, useParentForm } from "@formily/react";
-import React, { useContext } from "react";
+import React from "react";
 import { FormLayout, IFormilyLayoutProps } from "../form-layout";
 import { PreviewText } from "../preview-text";
-import { ConfigProvider } from "@arco-design/web-react";
-import { dayjs } from "@arco-design/web-react/es/_util/dayjs";
 
 export interface FormProps extends IFormilyLayoutProps {
   form?: FormType;

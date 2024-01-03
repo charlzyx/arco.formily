@@ -1,12 +1,11 @@
-import dayjs from "dayjs";
-import { connect, mapProps, mapReadPretty } from "@formily/react";
 import {
   TimePicker as ArcoTimePicker,
   TimePickerProps as ArcoTimePickerProps,
   TimeRangePickerProps,
 } from "@arco-design/web-react";
-import { PreviewText } from "../preview-text";
+import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { getDateTimePickerMapper } from "../__builtins__";
+import { PreviewText } from "../preview-text";
 type ComposedTimePicker = React.FC<
   React.PropsWithChildren<ArcoTimePickerProps>
 > & {

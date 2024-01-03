@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
 import { ReactFC } from "@formily/react";
 import { isFn } from "@formily/shared";
+import React, { Fragment } from "react";
 
 type ReactRenderPropsChildren<T = any> =
   | React.ReactNode

@@ -2,7 +2,7 @@ import { GeneralField } from "@formily/core";
 import { isArr, isObj, isBool, isFn, isEmpty } from "@formily/shared";
 import { markRaw } from "@formily/reactive";
 import { dayjs } from "@arco-design/web-react/es/_util/dayjs";
-import type { Dayjs } from 'dayjs'
+import type { Dayjs } from "dayjs";
 
 export const dayjsable = (value: any, format?: string) => {
   return Array.isArray(value)
@@ -20,7 +20,7 @@ export const formatDayjsValue = (
   locale: string,
   placeholder?: string
 ): string | string[] => {
-  dayjs.locale(locale)
+  dayjs.locale(locale);
   const formatDate = (date: any, format: any, i = 0) => {
     if (!date) return placeholder;
     if (dayjs.isDayjs(value)) {

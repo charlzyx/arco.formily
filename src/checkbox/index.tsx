@@ -1,9 +1,9 @@
-import { connect, mapProps, mapReadPretty } from "@formily/react";
 import {
   Checkbox as ArcoCheckbox,
-  CheckboxProps,
   CheckboxGroupProps,
+  CheckboxProps,
 } from "@arco-design/web-react";
+import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { PreviewText } from "../preview-text";
 
 type ComposedCheckbox = React.FC<React.PropsWithChildren<CheckboxProps>> & {

@@ -1,9 +1,9 @@
-import { connect, mapProps, mapReadPretty } from "@formily/react";
 import {
   Radio as ArcoRadio,
   RadioGroupProps,
   RadioProps,
 } from "@arco-design/web-react";
+import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { PreviewText } from "../preview-text";
 
 type ComposedRadio = React.FC<React.PropsWithChildren<RadioProps<any>>> & {

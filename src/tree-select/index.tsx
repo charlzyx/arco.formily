@@ -1,9 +1,8 @@
-import React from "react";
-import { connect, mapReadPretty, mapProps } from "@formily/react";
 import { TreeSelect as ArcoTreeSelect } from "@arco-design/web-react";
-import { PreviewText } from "../preview-text";
 import { IconLoading } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
+import { connect, mapProps, mapReadPretty } from "@formily/react";
+import { PreviewText } from "../preview-text";
 export const TreeSelect = connect(
   ArcoTreeSelect,
   mapProps(

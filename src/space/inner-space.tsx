@@ -1,13 +1,7 @@
-import React, {
-  useContext,
-  Fragment,
-  forwardRef,
-  ReactElement,
-  useMemo,
-} from "react";
-import cs from "classnames";
-import { Space, ConfigProvider, SpaceProps } from "@arco-design/web-react";
+import { ConfigProvider, SpaceProps } from "@arco-design/web-react";
 import { isArr as isArray, isNum as isNumber } from "@formily/shared";
+import cs from "classnames";
+import { Fragment, ReactElement, forwardRef, useContext, useMemo } from "react";
 import { toArray, usePrefixCls } from "../__builtins__";
 
 const defaultProps: SpaceProps = {

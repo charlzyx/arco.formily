@@ -38,7 +38,7 @@ jobs:
         run: yarn install
       - name: Build with Rspress
         run: |
-          yarn run build
+          yarn run build:docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:

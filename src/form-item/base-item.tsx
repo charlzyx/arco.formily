@@ -1,7 +1,5 @@
 import {
   FormItemProps as ArcoFormItemProps,
-  ConfigProvider,
-  Space,
   Tooltip,
   TooltipProps,
 } from "@arco-design/web-react";
@@ -13,10 +11,10 @@ import {
   IconQuestionCircle,
 } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
-import { useOverflow } from "./useOverflow";
-import { isObj, isUndef } from "@formily/shared";
+import { useField } from "@formily/react";
+import { isObj } from "@formily/shared";
 import cls from "classnames";
-import React, { ReactNode, useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { CSSTransition } from "react-transition-group";
 import { pickDataProps, usePrefixCls } from "../__builtins__";
 import {
@@ -24,7 +22,7 @@ import {
   IFormilyLayoutProps,
   useFormLayout,
 } from "../form-layout";
-import { useField } from "@formily/react";
+import { useOverflow } from "./useOverflow";
 
 export interface IFormItemProps
   extends Omit<

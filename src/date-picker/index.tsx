@@ -1,15 +1,15 @@
-import { connect, mapProps, mapReadPretty } from "@formily/react";
 import {
   DatePicker as ArcoDatePicker,
   DatePickerProps as ArcoDatePickerProps,
-  WeekPickerProps,
   MonthPickerProps,
   QuarterPickerProps,
-  YearPickerProps,
   RangePickerProps,
+  WeekPickerProps,
+  YearPickerProps,
 } from "@arco-design/web-react";
-import { PreviewText } from "../preview-text";
+import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { getDateTimePickerMapper, getDefaultFormat } from "../__builtins__";
+import { PreviewText } from "../preview-text";
 
 type ComposedDatePicker = React.FC<
   React.PropsWithChildren<ArcoDatePickerProps>

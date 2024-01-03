@@ -1,7 +1,7 @@
-import React from "react";
 import { SpaceProps } from "@arco-design/web-react";
-import { InnerSpace } from "./inner-space";
+import React from "react";
 import { useFormLayout } from "../form-layout";
+import { InnerSpace } from "./inner-space";
 
 export const Space: React.FC<React.PropsWithChildren<SpaceProps>> = (props) => {
   const layout = useFormLayout();

@@ -1,21 +1,21 @@
-import React, { Fragment, useMemo } from "react";
 import {
-  Collapse,
-  CollapseProps,
-  CollapseItemProps,
   Badge,
+  Collapse,
+  CollapseItemProps,
+  CollapseProps,
 } from "@arco-design/web-react";
-import { model, markRaw } from "@formily/reactive";
-import {
-  useField,
-  observer,
-  useFieldSchema,
-  RecursionField,
-} from "@formily/react";
 import { Schema, SchemaKey } from "@formily/json-schema";
-import cls from "classnames";
-import { usePrefixCls } from "../__builtins__";
+import {
+  RecursionField,
+  observer,
+  useField,
+  useFieldSchema,
+} from "@formily/react";
+import { markRaw, model } from "@formily/reactive";
 import { toArr } from "@formily/shared";
+import cls from "classnames";
+import React, { Fragment, useMemo } from "react";
+import { usePrefixCls } from "../__builtins__";
 
 type ActiveKeys = string | Array<string>;
 

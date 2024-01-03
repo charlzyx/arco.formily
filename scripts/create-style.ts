@@ -1,31 +1,32 @@
-import glob from 'glob'
-import path from 'path'
-import fs from 'fs-extra'
+import { globSync } from "glob";
+import path from "path";
+import fs from "fs-extra";
 
-glob(
-  './*/style.less',
-  { cwd: path.resolve(__dirname, './src') },
-  (err, files) => {
-    if (err) return console.error(err)
-    fs.writeFile(
-      path.resolve(__dirname, './src/style.ts'),
-      `// auto generated code
+const run = () => {
+  const files = globSync("../src/*/style.less", {
+    cwd: path.resolve(__dirname, "../src"),
+  });
+
+  fs.writeFile(
+    path.resolve(__dirname, "../src/style.ts"),
+    `// auto generated code
 ${files
   .map((path) => {
-    return `import '${path}'\n`
+    return `import './${path}'\n`;
   })
-  .join('')}`,
-      'utf8'
-    )
-    fs.writeFile(
-      path.resolve(__dirname, './src/style.less'),
-      `// auto generated code
+  .join("")}`,
+    "utf8"
+  );
+  fs.writeFile(
+    path.resolve(__dirname, "../src/style.less"),
+    `// auto generated code
 ${files
   .map((path) => {
-    return `@import '${path}';\n`
+    return `@import './${path}';\n`;
   })
-  .join('')}`,
-      'utf8'
-    )
-  }
-)
+  .join("")}`,
+    "utf8"
+  );
+};
+
+run();

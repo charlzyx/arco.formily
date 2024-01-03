@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
-import { define, observable, action, markRaw, model } from "@formily/reactive";
-import { Steps, StepProps, StepsProps } from "@arco-design/web-react";
-import cls from "classnames";
+import { StepProps, Steps, StepsProps } from "@arco-design/web-react";
 import { Form, VoidField } from "@formily/core";
-import {
-  connect,
-  useField,
-  observer,
-  useFieldSchema,
-  RecursionField,
-} from "@formily/react";
 import { Schema, SchemaKey } from "@formily/json-schema";
+import {
+  RecursionField,
+  connect,
+  observer,
+  useField,
+  useFieldSchema,
+} from "@formily/react";
+import { action, define, markRaw, model, observable } from "@formily/reactive";
+import cls from "classnames";
+import React, { Fragment } from "react";
 import { usePrefixCls } from "../__builtins__";
 
 export interface IFormStep {

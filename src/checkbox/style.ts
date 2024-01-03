@@ -1,1 +1,1 @@
-import "./style.less";
+import "@arco-design/web-react/lib/Checkbox/style/index";

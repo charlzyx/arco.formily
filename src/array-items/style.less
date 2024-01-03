@@ -1,6 +1,6 @@
-@import (reference) '@arco-design/web-react/es/Card/style/token.less';
+@import (reference) "@arco-design/web-react/es/Card/style/token.less";
 
-@array-items-prefix-cls: ~'arco-formily-array-items';
+@array-items-prefix-cls: ~"@{prefix}-formily-array-items";
 
 .@{array-items-prefix-cls}-item-inner {
   visibility: visible;
@@ -20,14 +20,14 @@
   justify-content: space-between;
   color: @color-text-1;
 
-  arco-formily-item:not(arco-formily-item-feedback-layout-popover) {
+  @{prefix}-formily-item:not(@{prefix}-formily-item-feedback-layout-popover) {
     margin-bottom: 0 !important;
 
-    arco-formily-item-help {
+    @{prefix}-formily-item-help {
       position: absolute;
       font-size: 12px;
       top: 100%;
-    background: @card-color-bg;
+      background: @card-color-bg;
       width: 100%;
       margin-top: 3px;
       padding: 3px;
@@ -44,10 +44,10 @@
   padding: 10px 0;
   justify-content: space-between;
 
-  arco-formily-item:not(arco-formily-item-feedback-layout-popover) {
+  @{prefix}-formily-item:not(@{prefix}-formily-item-feedback-layout-popover) {
     margin-bottom: 0 !important;
 
-    arco-formily-item-help {
+    @{prefix}-formily-item-help {
       position: absolute;
       font-size: 12px;
       top: 100%;

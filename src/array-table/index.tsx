@@ -1,15 +1,10 @@
-import { ArrayBaseMixins, ArrayBase } from "../array-base";
+import { Pagination, Table } from "@arco-design/web-react";
 import type { ArrayField } from "@formily/core";
 import { observer, useField } from "@formily/react";
-import {
-  Table,
-  PaginationProps,
-  Pagination,
-  Space,
-} from "@arco-design/web-react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useAddition, useColumnsAndSourceRender, useSortable } from "./hooks";
 import { usePrefixCls } from "../__builtins__";
+import { ArrayBase, ArrayBaseMixins } from "../array-base";
+import { useAddition, useColumnsAndSourceRender, useSortable } from "./hooks";
 
 type IQueryTableProps = React.ComponentProps<typeof Table>;
 

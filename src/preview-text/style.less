@@ -1,10 +1,12 @@
-@form-text-prefix-cls: ~'arco-form-text';
+@import (reference) "@arco-design/web-react/es/style/theme/default.less";
+
+@form-text-prefix-cls: ~"@{prefix}-form-text";
 
 .@{form-text-prefix-cls} {
   font-size: 14px;
   font-weight: 500;
 
-  .arco-tag:last-child {
+  .@{prefix}-tag:last-child {
     margin-right: 0;
   }
 }

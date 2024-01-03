@@ -1,4 +1,3 @@
-import React, { Fragment, useState, useEffect } from "react";
 import {
   Badge,
   Card,
@@ -7,17 +6,18 @@ import {
   CollapseProps,
   Empty,
 } from "@arco-design/web-react";
-import { ArrayField, createForm, onFieldValueChange } from "@formily/core";
+import { ArrayField } from "@formily/core";
 import {
+  ISchema,
   RecursionField,
+  observer,
   useField,
   useFieldSchema,
-  observer,
-  ISchema,
 } from "@formily/react";
 import cls from "classnames";
-import ArrayBase, { ArrayBaseMixins, IArrayBaseProps } from "../array-base";
+import React, { Fragment, useEffect, useState } from "react";
 import { usePrefixCls } from "../__builtins__";
+import ArrayBase, { ArrayBaseMixins, IArrayBaseProps } from "../array-base";
 
 export interface IArrayCollapseProps extends CollapseProps {
   defaultOpenPanelCount?: number;

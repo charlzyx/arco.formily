@@ -1,15 +1,15 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { isVoidField, Field } from "@formily/core";
-import { useField, observer } from "@formily/react";
 import { Popover, PopoverProps } from "@arco-design/web-react";
 import {
-  IconEdit as EditOutlined,
   IconClose as CloseOutlined,
+  IconEdit as EditOutlined,
   IconMessage as MessageOutlined,
 } from "@arco-design/web-react/icon";
-import { BaseItem, IFormItemProps } from "../form-item";
-import { useClickAway, usePrefixCls } from "../__builtins__";
+import { Field, isVoidField } from "@formily/core";
+import { observer, useField } from "@formily/react";
 import cls from "classnames";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { useClickAway, usePrefixCls } from "../__builtins__";
+import { BaseItem, IFormItemProps } from "../form-item";
 /**
  * 默认Inline展示
  */

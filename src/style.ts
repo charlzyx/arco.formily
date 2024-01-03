@@ -1,0 +1,12 @@
+// auto generated code
+import './preview-text/style.less'
+import './form-item/style.less'
+import './form-grid/style.less'
+import './form-button-group/style.less'
+import './editable/style.less'
+import './array-tabs/style.less'
+import './array-table/style.less'
+import './array-items/style.less'
+import './array-collapse/style.less'
+import './array-cards/style.less'
+import './array-base/style.less'

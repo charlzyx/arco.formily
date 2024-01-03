@@ -1,25 +1,23 @@
-@import './grid.less';
-@import (reference) '@arco-design/web-react/es/Form/style/token.less';
+@import "./grid.less";
+@import (reference) "@arco-design/web-react/es/Form/style/token.less";
 
-@form-item-cls: ~'arco-formily-item';
+@form-item-cls: ~"@{prefix}-formily-item";
 
 .@{form-item-cls}-layout-wrapper {
   max-width: 100%;
   flex: 1;
   display: flex;
 
-  > .arco-form-item-wrapper {
+  > .@{prefix}-form-item-wrapper {
     width: 100%;
   }
 }
 
-.arco-form-item-symbol-formily {
+.@{prefix}-form-item-symbol-formily {
   width: 12px;
   height: 12px;
   display: inline-block;
 }
-
-
 
 .@{form-item-cls} {
   width: auto;
@@ -65,7 +63,6 @@
     margin-left: 4px;
     margin-right: 4px;
   }
-
 }
 
 .@{form-item-cls}-label {
@@ -127,7 +124,7 @@
 }
 
 .@{form-item-cls}-control-wrap {
-  .@{form-item-cls}-component  {
+  .@{form-item-cls}-component {
     white-space: pre-line;
     word-break: break-all;
   }

@@ -1,21 +1,21 @@
-import React, { useRef } from "react";
-import { toJS } from "@formily/reactive";
 import { ArrayField } from "@formily/core";
-import {
-  useField,
-  observer,
-  useFieldSchema,
-  RecursionField,
-} from "@formily/react";
-import cls from "classnames";
 import { ISchema } from "@formily/json-schema";
-import { usePrefixCls } from "../__builtins__";
+import {
+  RecursionField,
+  observer,
+  useField,
+  useFieldSchema,
+} from "@formily/react";
+import { toJS } from "@formily/reactive";
+import cls from "classnames";
+import React, { useRef } from "react";
 import {
   SortableContainer,
   SortableContainerProps,
-  SortableElementProps,
   SortableElement,
+  SortableElementProps,
 } from "react-sortable-hoc";
+import { usePrefixCls } from "../__builtins__";
 import { ArrayBase, ArrayBaseMixins, IArrayBaseProps } from "../array-base";
 
 type ComposedArrayItems = React.FC<

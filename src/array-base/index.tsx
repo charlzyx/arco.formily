@@ -1,3 +1,4 @@
+import { Button, ButtonProps } from "@arco-design/web-react";
 import {
   IconCopy as CopyOutlined,
   IconDelete as DeleteOutlined,
@@ -9,11 +10,10 @@ import {
 import { ArrayField } from "@formily/core";
 import { JSXComponent, Schema, useField, useFieldSchema } from "@formily/react";
 import { clone, isUndef, isValid } from "@formily/shared";
-import { Button, ButtonProps } from "@arco-design/web-react";
 import cls from "classnames";
 import React, { createContext, useContext } from "react";
-import { usePrefixCls } from "../__builtins__";
 import { SortableHandle } from "react-sortable-hoc";
+import { usePrefixCls } from "../__builtins__";
 
 export interface IArrayBaseAdditionProps extends ButtonProps {
   title?: string;
