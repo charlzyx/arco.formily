@@ -7,17 +7,9 @@ import {
   Pagination,
   Space,
 } from "@arco-design/web-react";
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAddition, useColumnsAndSourceRender, useSortable } from "./hooks";
 import { usePrefixCls } from "../__builtins__";
-
-import "./style";
 
 type IQueryTableProps = React.ComponentProps<typeof Table>;
 

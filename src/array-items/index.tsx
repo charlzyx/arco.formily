@@ -17,7 +17,6 @@ import {
   SortableElement,
 } from "react-sortable-hoc";
 import { ArrayBase, ArrayBaseMixins, IArrayBaseProps } from "../array-base";
-import "./style";
 
 type ComposedArrayItems = React.FC<
   React.PropsWithChildren<

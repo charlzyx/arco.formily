@@ -5,8 +5,6 @@ import { Grid, IGridOptions } from "@formily/grid";
 import { usePrefixCls, pickDataProps } from "../__builtins__";
 import { useFormLayout } from "../form-layout";
 import cls from "classnames";
-import "./style";
-
 const FormGridContext = React.createContext<Grid<HTMLElement>>(
   null as unknown as Grid<HTMLElement>
 );

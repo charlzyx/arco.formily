@@ -14,7 +14,6 @@ import cls from "classnames";
 import React, { createContext, useContext } from "react";
 import { usePrefixCls } from "../__builtins__";
 import { SortableHandle } from "react-sortable-hoc";
-import "./style";
 
 export interface IArrayBaseAdditionProps extends ButtonProps {
   title?: string;

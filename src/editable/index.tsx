@@ -10,7 +10,6 @@ import {
 import { BaseItem, IFormItemProps } from "../form-item";
 import { useClickAway, usePrefixCls } from "../__builtins__";
 import cls from "classnames";
-import "./style";
 /**
  * 默认Inline展示
  */

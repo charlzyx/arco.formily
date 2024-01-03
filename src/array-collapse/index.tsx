@@ -15,11 +15,9 @@ import {
   observer,
   ISchema,
 } from "@formily/react";
-import { toArr } from "@formily/shared";
 import cls from "classnames";
 import ArrayBase, { ArrayBaseMixins, IArrayBaseProps } from "../array-base";
 import { usePrefixCls } from "../__builtins__";
-import "./style";
 
 export interface IArrayCollapseProps extends CollapseProps {
   defaultOpenPanelCount?: number;

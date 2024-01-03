@@ -8,7 +8,6 @@ import {
   RecursionField,
   ReactFC,
 } from "@formily/react";
-import "./style";
 import { usePrefixCls } from "../__builtins__";
 
 interface IFeedbackBadgeProps {

@@ -24,7 +24,6 @@ import {
   IFormilyLayoutProps,
   useFormLayout,
 } from "../form-layout";
-import "./style";
 import { useField } from "@formily/react";
 
 export interface IFormItemProps

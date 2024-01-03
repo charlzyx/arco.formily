@@ -11,7 +11,6 @@ import { BaseItem, IFormItemProps } from "../form-item";
 import { usePrefixCls } from "../__builtins__";
 import StickyBox from "react-sticky-box";
 import cls from "classnames";
-import "./style";
 import { useFormLayout } from "../form-layout";
 interface IStickyProps extends React.ComponentProps<typeof StickyBox> {
   align?: React.CSSProperties["textAlign"];

@@ -11,7 +11,6 @@ import cls from "classnames";
 import { ISchema } from "@formily/json-schema";
 import { usePrefixCls } from "../__builtins__";
 import { ArrayBase, ArrayBaseMixins, IArrayBaseProps } from "../array-base";
-import "./style";
 
 type ComposedArrayCards = React.FC<
   React.PropsWithChildren<CardProps & IArrayBaseProps>
