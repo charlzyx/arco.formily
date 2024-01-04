@@ -8,6 +8,7 @@ import { Field } from "@formily/core";
 import { connect, mapProps, mapReadPretty } from "@formily/react";
 import React from "react";
 import { PreviewText } from "../preview-text";
+import "./style";
 
 type ComposedInput = React.FC<React.PropsWithChildren<InputProps>> & {
   TextArea?: React.FC<React.PropsWithChildren<TextAreaProps>>;

@@ -3,7 +3,7 @@ import { FormProvider, JSXComponent, useParentForm } from "@formily/react";
 import React from "react";
 import { FormLayout, IFormilyLayoutProps } from "../form-layout";
 import { PreviewText } from "../preview-text";
-
+import "./style";
 export interface FormProps extends IFormilyLayoutProps {
   form?: FormType;
   component?: JSXComponent;

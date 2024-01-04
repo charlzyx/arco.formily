@@ -18,6 +18,7 @@ import { isArr, isValid, toArr } from "@formily/shared";
 import cls from "classnames";
 import React, { createContext, useContext } from "react";
 import { formatDayjsValue, usePrefixCls } from "../__builtins__";
+import "./style";
 
 export interface BaseOptionType {
   disabled?: boolean;

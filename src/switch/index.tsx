@@ -1,5 +1,6 @@
 import { Switch as ArcoSwitch } from "@arco-design/web-react";
 import { connect, mapProps } from "@formily/react";
+import "./style";
 
 export const Switch = connect(
   ArcoSwitch,

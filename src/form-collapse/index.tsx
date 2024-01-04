@@ -16,6 +16,7 @@ import { toArr } from "@formily/shared";
 import cls from "classnames";
 import React, { Fragment, useMemo } from "react";
 import { usePrefixCls } from "../__builtins__";
+import "./style";
 
 type ActiveKeys = string | Array<string>;
 

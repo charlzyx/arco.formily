@@ -5,6 +5,8 @@ import cls from "classnames";
 import React, { useContext, useLayoutEffect, useMemo, useRef } from "react";
 import { pickDataProps, usePrefixCls } from "../__builtins__";
 import { useFormLayout } from "../form-layout";
+import "./style";
+
 const FormGridContext = React.createContext<Grid<HTMLElement>>(
   null as unknown as Grid<HTMLElement>
 );

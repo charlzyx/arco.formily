@@ -41,7 +41,7 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
   (props) => {
     const field = useField<ArrayField>();
     const schema = useFieldSchema();
-    const [activeKey, setActiveKey] = useState("tab-0");
+    const [activeTab, setActiveTab] = useState("tab-0");
     const prefixCls = usePrefixCls("formily-array-tabs");
     const value = Array.isArray(field.value) ? field.value : [];
     const dataSource = value?.length ? value : [{}];
@@ -53,11 +53,11 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
         } else {
           field.push(null, null);
         }
-        setActiveKey(`tab-${id}`);
+        setActiveTab(`tab-${id}`);
       } else if (type == "remove") {
         const index = Number(targetKey.match(/-(\d+)/)?.[1]);
         if (index - 1 > -1) {
-          setActiveKey(`tab-${index - 1}`);
+          setActiveTab(`tab-${index - 1}`);
         }
         field.remove(index);
         // 只剩下一个的时候删除
@@ -70,9 +70,9 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
       <Tabs
         type="card"
         {...props}
-        activeTab={activeKey}
+        activeTab={activeTab}
         onChange={(key) => {
-          setActiveKey(key);
+          setActiveTab(key);
         }}
         editable={field.editable}
         onAddTab={() => onEdit(null, "add")}

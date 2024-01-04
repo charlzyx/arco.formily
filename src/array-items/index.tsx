@@ -17,7 +17,7 @@ import {
 } from "react-sortable-hoc";
 import { usePrefixCls } from "../__builtins__";
 import { ArrayBase, ArrayBaseMixins, IArrayBaseProps } from "../array-base";
-
+import "./style";
 type ComposedArrayItems = React.FC<
   React.PropsWithChildren<
     React.HTMLAttributes<HTMLDivElement> & IArrayBaseProps

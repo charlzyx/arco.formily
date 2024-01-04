@@ -18,7 +18,7 @@ import cls from "classnames";
 import React, { Fragment, useEffect, useState } from "react";
 import { usePrefixCls } from "../__builtins__";
 import ArrayBase, { ArrayBaseMixins, IArrayBaseProps } from "../array-base";
-
+import "./style";
 export interface IArrayCollapseProps extends CollapseProps {
   defaultOpenPanelCount?: number;
 }

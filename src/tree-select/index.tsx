@@ -3,6 +3,8 @@ import { IconLoading } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
 import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { PreviewText } from "../preview-text";
+import "./style";
+
 export const TreeSelect = connect(
   ArcoTreeSelect,
   mapProps(

@@ -3,6 +3,7 @@ import { IconLoading } from "@arco-design/web-react/icon";
 import { Field } from "@formily/core";
 import { ReactFC, connect, mapProps, mapReadPretty } from "@formily/react";
 import { PreviewText } from "../preview-text";
+import "./style";
 
 export const Select: ReactFC<SelectProps> = connect(
   ArcoSelect,

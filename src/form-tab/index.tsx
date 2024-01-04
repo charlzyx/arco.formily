@@ -11,6 +11,7 @@ import { markRaw, model } from "@formily/reactive";
 import cls from "classnames";
 import React, { Fragment, useMemo } from "react";
 import { usePrefixCls } from "../__builtins__";
+import "./style";
 export interface IFormTab {
   activeTab: string;
   setActiveTab(key: string): void;

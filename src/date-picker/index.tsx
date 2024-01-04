@@ -10,7 +10,7 @@ import {
 import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { getDateTimePickerMapper, getDefaultFormat } from "../__builtins__";
 import { PreviewText } from "../preview-text";
-
+import "./style";
 type ComposedDatePicker = React.FC<
   React.PropsWithChildren<ArcoDatePickerProps>
 > & {

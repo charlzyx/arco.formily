@@ -5,7 +5,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { usePrefixCls } from "../__builtins__";
 import { ArrayBase, ArrayBaseMixins } from "../array-base";
 import { useAddition, useColumnsAndSourceRender, useSortable } from "./hooks";
-
+import "./style";
 type IQueryTableProps = React.ComponentProps<typeof Table>;
 
 const usePage = (dataSource: any[], page: IQueryTableProps["pagination"]) => {

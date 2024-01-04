@@ -3,6 +3,7 @@ import { connect, mapReadPretty } from "@formily/react";
 import React from "react";
 import { PreviewText } from "../preview-text";
 import { PasswordStrength } from "./PasswordStrength";
+import "./style";
 
 export interface IPasswordProps extends InputProps {
   checkStrength: boolean;

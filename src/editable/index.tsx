@@ -10,10 +10,7 @@ import cls from "classnames";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useClickAway, usePrefixCls } from "../__builtins__";
 import { BaseItem, IFormItemProps } from "../form-item";
-/**
- * 默认Inline展示
- */
-
+import "./style";
 type IPopoverProps = PopoverProps;
 
 type ComposedEditable = React.FC<React.PropsWithChildren<IFormItemProps>> & {

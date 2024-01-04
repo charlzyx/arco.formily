@@ -23,6 +23,7 @@ import {
   useFormLayout,
 } from "../form-layout";
 import { useOverflow } from "./useOverflow";
+import "./style";
 
 export interface IFormItemProps
   extends Omit<

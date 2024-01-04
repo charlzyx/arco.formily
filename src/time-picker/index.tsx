@@ -6,6 +6,8 @@ import {
 import { connect, mapProps, mapReadPretty } from "@formily/react";
 import { getDateTimePickerMapper } from "../__builtins__";
 import { PreviewText } from "../preview-text";
+import "./style";
+
 type ComposedTimePicker = React.FC<
   React.PropsWithChildren<ArcoTimePickerProps>
 > & {

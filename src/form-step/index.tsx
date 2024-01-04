@@ -12,6 +12,7 @@ import { action, define, markRaw, model, observable } from "@formily/reactive";
 import cls from "classnames";
 import React, { Fragment } from "react";
 import { usePrefixCls } from "../__builtins__";
+import "./style";
 
 export interface IFormStep {
   connect: (steps: SchemaStep[], field: VoidField) => void;

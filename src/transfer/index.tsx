@@ -1,6 +1,7 @@
 import { Transfer as ArcoTransfer } from "@arco-design/web-react";
 import { isVoidField } from "@formily/core";
 import { connect, mapProps } from "@formily/react";
+import "./style";
 
 export const Transfer = connect(
   ArcoTransfer,

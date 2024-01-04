@@ -39,7 +39,7 @@ const config = {
       exclude: "./**/*.less",
     }),
     postcss({
-      extract: "dist/arco.formily.css",
+      extract: "arco.formily.css",
       minimize: false,
       sourceMap: false,
       modules: true,
