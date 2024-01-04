@@ -29,10 +29,12 @@ jobs:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           tag_name: "${{ steps.get_version.outputs.VERSION }}"
           release_name: "Rush! ${{ steps.get_version.outputs.VERSION }}"
-          body: 'See the assets to download this version and install. <a href="https://github.com/charlzyx/rush/blob/master/CHANGELOG.md">CHANGELOG</a>'
+          body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'
   publish-npm:
     runs-on: ubuntu-latest
     steps:
