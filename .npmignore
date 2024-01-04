@@ -1,4 +1,5 @@
 src/
+examples/
 node_modeuls/
 bun.lockb
 *.png

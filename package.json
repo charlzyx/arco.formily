@@ -1,6 +1,6 @@
 {
   "name": "arco.formily",
-  "version": "0.0.1-alpha.1",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/charlzyx/arco.formily"
@@ -23,7 +23,6 @@
     "dev": "rspress dev",
     "build:docs": "rspress build",
     "preview": "rspress preview",
-    "#似乎没必要dts": "rollup -c rollup.dts.js --bundleConfigAsCjs",
     "create:style": "tsx ./scripts/create-style.ts",
     "build:style": "tsx ./scripts/build-style.ts",
     "pack": "rollup -c rollup.config.js --bundleConfigAsCjs",
