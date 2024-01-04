@@ -7,7 +7,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-      - "v*.*.*" # Push events to matching v*, i.e. v1.0, v20.15.10
+      - "v*.*.*-alpha.*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 permissions:
   contents: write
@@ -32,7 +32,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          prerelease: false
+          prerelease: true
           tag_name: "${{ steps.get_version.outputs.VERSION }}"
           body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'
   publish-npm:
