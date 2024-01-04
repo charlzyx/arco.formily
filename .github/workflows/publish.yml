@@ -31,8 +31,6 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-          prerelease: false
           tag_name: "${{ steps.get_version.outputs.VERSION }}"
           body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'
   publish-npm:
@@ -41,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: yarn
       - run: yarn build
