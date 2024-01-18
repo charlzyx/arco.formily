@@ -25,16 +25,19 @@ jobs:
           tag_name="${GITHUB_REF:10}"
 
           tag="latest"
+          pre_release=false
           # 检查是否预发布
           if [[ $tag_name == *"alpha"* ]]; then
             tag="alpha"
+            pre_release=true
           fi
 
           if [[ $tag_name == *"beta"* ]]; then
             tag="beta"
+            pre_release=true
           fi
 
-          echo "::set-output name=module_name::$module_name"
+          echo "::set-output name=pre_release::$pre_release"
           echo "::set-output name=version::$tag_name"
           echo "::set-output name=tag::$tag"
       - uses: oven-sh/setup-bun@v1
@@ -56,5 +59,6 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
+          prerelease:  "${{ steps.parse_tag.outputs.pre_release }}"
           tag_name: "${{ steps.parse_tag.outputs.version }}"
           body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'
