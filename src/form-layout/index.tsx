@@ -41,14 +41,14 @@ export interface IFormilyLayoutContext
   tooltipLayout?: "icon" | "text";
 }
 
-export interface IFormilyLayoutProps extends IFormilyLayoutContext {}
+export type IFormilyLayoutProps = IFormilyLayoutContext;
 
 export const FormLayoutDeepContext = createContext<IFormilyLayoutContext>(
-  null as unknown as IFormilyLayoutContext
+  null as unknown as IFormilyLayoutContext,
 );
 
 export const FormLayoutShallowContext = createContext<IFormilyLayoutContext>(
-  null as unknown as IFormilyLayoutContext
+  null as unknown as IFormilyLayoutContext,
 );
 
 export const useFormDeepLayout = () => useContext(FormLayoutDeepContext);
@@ -79,7 +79,7 @@ export const FormLayout: React.FC<
       [`${formPrefixCls}-size-${props.size || "default"}`]:
         props.size || ctx.size,
     },
-    className
+    className,
   );
   const renderChildren = () => {
     const newDeepLayout: IFormilyLayoutContext = {

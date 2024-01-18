@@ -22,8 +22,8 @@ export const Transfer = connect(
             };
           }) || [],
       };
-    }
-  )
+    },
+  ),
 );
 
 Transfer.defaultProps = {

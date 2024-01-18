@@ -19,7 +19,7 @@ const FeedbackBadge: ReactFC<IFeedbackBadgeProps> = observer(
     const field = useField<ArrayField>();
     const tab = `${field.title || "Untitled"} ${props.index + 1}`;
     const errors = field.errors.filter((error: any) =>
-      error.address.includes(`${field.address}.${props.index}`)
+      error.address.includes(`${field.address}.${props.index}`),
     );
     if (errors.length) {
       return (
@@ -34,7 +34,7 @@ const FeedbackBadge: ReactFC<IFeedbackBadgeProps> = observer(
     scheduler(request) {
       requestAnimationFrame(request);
     },
-  }
+  },
 );
 
 export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
@@ -46,7 +46,7 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
     const value = Array.isArray(field.value) ? field.value : [];
     const dataSource = value?.length ? value : [{}];
     const onEdit = (targetKey: any, type: "add" | "remove") => {
-      if (type == "add") {
+      if (type === "add") {
         const id = dataSource.length;
         if (field?.value?.length) {
           field.push(null);
@@ -54,14 +54,14 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
           field.push(null, null);
         }
         setActiveTab(`tab-${id}`);
-      } else if (type == "remove") {
+      } else if (type === "remove") {
         const index = Number(targetKey.match(/-(\d+)/)?.[1]);
         if (index - 1 > -1) {
           setActiveTab(`tab-${index - 1}`);
         }
         field.remove(index);
         // 只剩下一个的时候删除
-        if (index === 0 && field.value.length == 1) {
+        if (index === 0 && field.value.length === 1) {
           field.reset({ forceClear: true });
         }
       }
@@ -100,7 +100,7 @@ export const ArrayTabs: React.FC<React.PropsWithChildren<TabsProps>> = observer(
     scheduler(request) {
       requestAnimationFrame(request);
     },
-  }
+  },
 );
 
 export default ArrayTabs;

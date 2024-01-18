@@ -31,7 +31,7 @@ type ComposedButtonGroup = ReactFC<IFormButtonGroupProps> & {
   >;
 };
 
-function getInheritedBackgroundColor(el: HTMLElement) {
+function getInheritedBackgroundColor(el: HTMLElement): string {
   // get default style for current browser
   const defaultStyle = getDefaultBackground(); // typically "rgba(0, 0, 0, 0)"
 
@@ -39,7 +39,7 @@ function getInheritedBackgroundColor(el: HTMLElement) {
   const backgroundColor = window.getComputedStyle(el).backgroundColor;
 
   // if we got a real value, return it
-  if (backgroundColor != defaultStyle) return backgroundColor;
+  if (backgroundColor !== defaultStyle) return backgroundColor;
 
   // if we've reached the top parent el without getting an explicit color, return default
   if (!el.parentElement) return defaultStyle;
@@ -50,9 +50,9 @@ function getInheritedBackgroundColor(el: HTMLElement) {
 
 function getDefaultBackground() {
   // have to add to the document in order to use getComputedStyle
-  let div = document.createElement("div");
+  const div = document.createElement("div");
   document.head.appendChild(div);
-  let bg = window.getComputedStyle(div).backgroundColor;
+  const bg = window.getComputedStyle(div).backgroundColor;
   document.head.removeChild(div);
   return bg;
 }
@@ -74,8 +74,8 @@ export const FormButtonGroup: ComposedButtonGroup = ({
           align === "left"
             ? "flex-start"
             : align === "right"
-            ? "flex-end"
-            : "center",
+              ? "flex-end"
+              : "center",
         display: "flex",
       }}
     >
@@ -144,8 +144,8 @@ FormButtonGroup.Sticky = ({ align, ...props }) => {
             align === "left"
               ? "flex-start"
               : align === "right"
-              ? "flex-end"
-              : "center",
+                ? "flex-end"
+                : "center",
         }}
       >
         {props.children}

@@ -16,7 +16,7 @@ export const Radio = connect(
   ArcoRadio,
   mapProps({
     value: "checked",
-  })
+  }),
 ) as ComposedRadio;
 
 Radio.__BYTE_RADIO = true;
@@ -26,7 +26,7 @@ Radio.Group = connect(
   mapProps({
     dataSource: "options",
   }),
-  mapReadPretty(PreviewText.Select)
+  mapReadPretty(PreviewText.Select),
 );
 
 export default Radio;

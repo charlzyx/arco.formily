@@ -22,8 +22,8 @@ import {
   IFormilyLayoutProps,
   useFormLayout,
 } from "../form-layout";
-import { useOverflow } from "./useOverflow";
 import "./style";
+import { useOverflow } from "./useOverflow";
 
 export interface IFormItemProps
   extends Omit<
@@ -100,23 +100,21 @@ const FormItemTip: React.FC<
     );
   }, []);
 
-  return (
-    visible && (
-      <CSSTransition
-        in={visible}
-        appear
-        classNames="formblink"
-        timeout={300}
-        unmountOnExit
-      >
-        <React.Fragment>
-          {Array.isArray(feedbackText)
-            ? feedbackText.map(renderTxt)
-            : renderTxt(feedbackText!, 1)}
-        </React.Fragment>
-      </CSSTransition>
-    )
-  );
+  return visible ? (
+    <CSSTransition
+      in={visible}
+      appear
+      classNames="formblink"
+      timeout={300}
+      unmountOnExit
+    >
+      <React.Fragment>
+        {Array.isArray(feedbackText)
+          ? feedbackText.map(renderTxt)
+          : renderTxt(feedbackText!, 1)}
+      </React.Fragment>
+    </CSSTransition>
+  ) : null;
 };
 
 export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
@@ -203,7 +201,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
             ? React.cloneElement(icon as React.ReactElement, {
                 className: cls(
                   tooltipIconClassName,
-                  (icon as React.ReactElement).props.className
+                  (icon as React.ReactElement).props.className,
                 ),
               })
             : icon;
@@ -288,7 +286,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
     `${prefixCls}-item`,
     {
       [`${prefixCls}-size-${size}`]: size,
-      [`${prefixCls}-item-error`]: feedbackText && feedbackStatus == "error",
+      [`${prefixCls}-item-error`]: feedbackText && feedbackStatus === "error",
       [`${prefixCls}-item-status-${
         feedbackStatus === "validating" ? "loading" : feedbackStatus
       }`]: feedbackStatus,
@@ -301,7 +299,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
       [`${formilyItemPrefixCls}-control-wrap`]: !!wrapperWrap,
     },
     `${prefixCls}-layout-${layout}`,
-    props.className
+    props.className,
   );
 
   const layoutWrapperCls = cls(`${formilyItemPrefixCls}-layout-wrapper`, {

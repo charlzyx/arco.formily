@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
 import { isArr, isValid } from "@formily/shared";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * 这些属性会根据 response 来响应式的配置
@@ -47,8 +47,8 @@ const factor = <T>(value: T | T[], breakpointIndex: number): T =>
   isValid(value) ? calcFactor(value as any, breakpointIndex) : value;
 
 const calculateProps = <T>(
-  target: HTMLElement | null = null,
-  props: IResponsiveFormLayoutProps<T>
+  target: HTMLElement | null,
+  props: IResponsiveFormLayoutProps<T>,
 ) => {
   if (!target) return props as IComputedProps & T;
   const { clientWidth } = target;
@@ -74,7 +74,7 @@ const calculateProps = <T>(
 };
 
 export const useResponsiveFormLayout = <T>(
-  props: IResponsiveFormLayoutProps<T>
+  props: IResponsiveFormLayoutProps<T>,
 ) => {
   const ref = useRef<HTMLDivElement>(null);
   const { breakpoints } = props;

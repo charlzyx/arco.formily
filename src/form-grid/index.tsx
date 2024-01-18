@@ -8,7 +8,7 @@ import { useFormLayout } from "../form-layout";
 import "./style";
 
 const FormGridContext = React.createContext<Grid<HTMLElement>>(
-  null as unknown as Grid<HTMLElement>
+  null as unknown as Grid<HTMLElement>,
 );
 
 export interface IFormGridProps extends IGridOptions {
@@ -73,7 +73,7 @@ export const FormGrid: ComposedFormGrid = observer(
     };
     const grid = useMemo(
       () => markRaw(options?.grid ? options.grid : new Grid(options)),
-      [Grid.id(options)]
+      [Grid.id(options)],
     );
     const ref = useRef<HTMLDivElement>(null);
     const prefixCls = usePrefixCls("formily-grid");
@@ -100,7 +100,7 @@ export const FormGrid: ComposedFormGrid = observer(
   },
   {
     forwardRef: true,
-  }
+  },
 ) as any;
 
 export const GridColumn: React.FC<React.PropsWithChildren<IGridColumnProps>> =

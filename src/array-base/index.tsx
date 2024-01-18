@@ -102,7 +102,7 @@ const getSchemaDefaultValue = (schema: Schema) => {
   if (schema?.type === "array") return [];
   if (schema?.type === "object") return {};
   if (schema?.type === "void") {
-    for (let key in schema.properties) {
+    for (const key in schema.properties) {
       /** @ts-ignore */
       const value = getSchemaDefaultValue(schema.properties[key]);
       if (isValid(value)) return value;
@@ -138,7 +138,7 @@ const SortHandle = SortableHandle((props: any) => {
       {...props}
       className={cls(
         `arco-table-cell ${prefixCls}-sort-handle`,
-        props.className
+        props.className,
       )}
       style={{
         ...props.style,
@@ -217,7 +217,7 @@ ArrayBase.Copy = React.forwardRef((props, ref) => {
       className={cls(
         `${prefixCls}-copy`,
         self?.disabled ? `${prefixCls}-copy-disabled` : "",
-        props.className
+        props.className,
       )}
       ref={ref}
       onClick={(e) => {
@@ -255,7 +255,7 @@ ArrayBase.Remove = React.forwardRef((props, ref) => {
       className={cls(
         `${prefixCls}-remove`,
         self?.disabled ? `${prefixCls}-remove-disabled` : "",
-        props.className
+        props.className,
       )}
       ref={ref}
       onClick={(e) => {
@@ -290,7 +290,7 @@ ArrayBase.MoveDown = React.forwardRef((props, ref) => {
       className={cls(
         `${prefixCls}-move-down`,
         self?.disabled ? `${prefixCls}-move-down-disabled` : "",
-        props.className
+        props.className,
       )}
       ref={ref}
       onClick={(e) => {
@@ -325,7 +325,7 @@ ArrayBase.MoveUp = React.forwardRef((props, ref) => {
       className={cls(
         `${prefixCls}-move-up`,
         self?.disabled ? `${prefixCls}-move-up-disabled` : "",
-        props.className
+        props.className,
       )}
       ref={ref}
       onClick={(e) => {

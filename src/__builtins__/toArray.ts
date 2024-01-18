@@ -8,7 +8,7 @@ export interface Option {
 
 export function toArray(
   children: React.ReactNode,
-  option: Option = {}
+  option: Option = {},
 ): React.ReactElement[] {
   let ret: React.ReactElement[] = [];
 

@@ -11,21 +11,11 @@ interface IPasswordStrengthProps {
   children?: ReactRenderPropsChildren<number>;
 }
 
-const isNum = function (c: number) {
-  return c >= 48 && c <= 57;
-};
-const isLower = function (c: number) {
-  return c >= 97 && c <= 122;
-};
-const isUpper = function (c: number) {
-  return c >= 65 && c <= 90;
-};
-const isSymbol = function (c: number) {
-  return !(isLower(c) || isUpper(c) || isNum(c));
-};
-const isLetter = function (c: number) {
-  return isLower(c) || isUpper(c);
-};
+const isNum = (c: number) => c >= 48 && c <= 57;
+const isLower = (c: number) => c >= 97 && c <= 122;
+const isUpper = (c: number) => c >= 65 && c <= 90;
+const isSymbol = (c: number) => !(isLower(c) || isUpper(c) || isNum(c));
+const isLetter = (c: number) => isLower(c) || isUpper(c);
 
 const getStrength = (val: string) => {
   if (!val) return 0;

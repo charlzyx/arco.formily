@@ -21,7 +21,7 @@ export const Input: ComposedInput = connect(
       ...props,
       suffix: (
         <span>
-          {(field as Field)?.["loading"] || (field as Field)?.["validating"] ? (
+          {(field as Field)?.loading || (field as Field)?.validating ? (
             <IconLoading />
           ) : (
             props.suffix
@@ -30,7 +30,7 @@ export const Input: ComposedInput = connect(
       ),
     };
   }),
-  mapReadPretty(PreviewText.Input)
+  mapReadPretty(PreviewText.Input),
 );
 
 Input.TextArea = connect(ArcoInput.TextArea, mapReadPretty(PreviewText.Input));

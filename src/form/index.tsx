@@ -35,7 +35,7 @@ export const Form: React.FC<React.PropsWithChildren<FormProps>> = ({
                 form.submit(onAutoSubmit).catch(onAutoSubmitFailed);
               },
             },
-            props.children
+            props.children,
           )}
         </FormLayout>
       </PreviewText.Placeholder>

@@ -106,6 +106,7 @@ export const ArrayCards: ComposedArrayCards = observer((props) => {
       );
       return (
         <ArrayBase.Item
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           key={index}
           index={index}
           record={() => field.value?.[index]}

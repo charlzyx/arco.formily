@@ -1,0 +1,39 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.1/schema.json",
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "lineEnding": "lf",
+    "ignore": ["dist", "doc_build"]
+  },
+  "linter": {
+    "ignore": ["dist", "doc_build"],
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "warn"
+      },
+      "complexity": {
+        "noUselessFragments": "warn",
+        "noForEach": "off"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "useKeyWithMouseEvents": "off",
+        "useValidAnchor": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "useSelfClosingElements": "off",
+        "noNonNullAssertion": "off",
+        "noUselessElse": "off"
+      }
+    }
+  }
+}

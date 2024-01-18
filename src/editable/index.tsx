@@ -146,6 +146,7 @@ Editable.Popover = observer((props) => {
         type: "error",
         address: `${field.address}.*`,
       });
+      // biome-ignore lint/correctness/noUnsafeFinally: <explanation>
       if (errors?.length) return;
       setVisible(false);
     }

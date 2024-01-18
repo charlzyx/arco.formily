@@ -3,13 +3,13 @@ import { Message } from "@arco-design/web-react";
 const noop = () => {};
 
 export const loading = async (
-  title: React.ReactNode = "Loading...",
-  processor: () => Promise<any>
+  title: React.ReactNode,
+  processor: () => Promise<any>,
 ) => {
   let hide = noop;
-  let loading = setTimeout(() => {
+  const loading = setTimeout(() => {
     hide = Message.loading({
-      content: title,
+      content: title ?? "Loading...",
     });
   }, 100);
   try {

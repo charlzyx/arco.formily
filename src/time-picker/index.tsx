@@ -17,13 +17,13 @@ type ComposedTimePicker = React.FC<
 export const TimePicker: ComposedTimePicker = connect(
   ArcoTimePicker,
   mapProps(getDateTimePickerMapper("time")),
-  mapReadPretty(PreviewText.TimePicker)
+  mapReadPretty(PreviewText.TimePicker),
 );
 
 TimePicker.RangePicker = connect(
   ArcoTimePicker.RangePicker,
   mapProps(getDateTimePickerMapper("time")),
-  mapReadPretty(PreviewText.TimeRangePicker)
+  mapReadPretty(PreviewText.TimeRangePicker),
 );
 
 export default TimePicker;

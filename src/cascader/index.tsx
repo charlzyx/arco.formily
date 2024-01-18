@@ -14,15 +14,15 @@ export const Cascader = connect(
       return {
         ...props,
         suffixIcon:
-          (field as Field)?.["loading"] || (field as Field)?.["validating"] ? (
+          (field as Field)?.loading || (field as Field)?.validating ? (
             <IconLoading />
           ) : (
             props.suffixIcon
           ),
       };
-    }
+    },
   ),
-  mapReadPretty(PreviewText.Cascader)
+  mapReadPretty(PreviewText.Cascader),
 );
 
 export default Cascader;

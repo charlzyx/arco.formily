@@ -6,6 +6,7 @@ import "./style";
 
 export interface ISubmitProps extends ButtonProps {
   onClick?: (e: Event) => any;
+
   onSubmit?: (values: any) => any;
   onSubmitSuccess?: (payload: any) => void;
   onSubmitFailed?: (feedbacks: IFormFeedback[]) => void;
@@ -35,7 +36,7 @@ export const Submit: React.FC<React.PropsWithChildren<ISubmitProps>> = observer(
   },
   {
     forwardRef: true,
-  }
+  },
 );
 
 export default Submit;

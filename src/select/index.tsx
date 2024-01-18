@@ -16,15 +16,15 @@ export const Select: ReactFC<SelectProps> = connect(
       return {
         ...props,
         suffixIcon:
-          (field as Field)?.["loading"] || (field as Field)?.["validating"] ? (
+          (field as Field)?.loading || (field as Field)?.validating ? (
             <IconLoading />
           ) : (
             props.suffixIcon
           ),
       };
-    }
+    },
   ),
-  mapReadPretty(PreviewText.Select)
+  mapReadPretty(PreviewText.Select),
 );
 
 export default Select;

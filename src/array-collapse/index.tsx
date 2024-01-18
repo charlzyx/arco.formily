@@ -62,7 +62,7 @@ const range = (count: number) => Array.from({ length: count }).map((_, i) => i);
 
 const takeDefaultActiveKeys = (
   dataSourceLength: number,
-  defaultOpenPanelCount: number
+  defaultOpenPanelCount: number,
 ) => {
   if (dataSourceLength < defaultOpenPanelCount)
     return range(dataSourceLength).map((x) => x.toString());
@@ -83,14 +83,14 @@ export const ArrayCollapse: ComposedArrayCollapse = observer((props) => {
   const field = useField<ArrayField>();
   const dataSource = Array.isArray(field.value) ? field.value : [];
   const [activeKeys, setActiveKeys] = useState<string[]>(
-    takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!)
+    takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!),
   );
   const schema = useFieldSchema();
   const prefixCls = usePrefixCls("formily-array-collapse");
   useEffect(() => {
     if (!field.modified && dataSource.length) {
       setActiveKeys(
-        takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!)
+        takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!),
       );
     }
   }, [dataSource.length, field]);

@@ -10,24 +10,15 @@
     "email": "charlzyx@qq.com",
     "url": "https://github.com/charlzyx/arco.formily"
   },
-  "main": "./lib/index.js",
-  "module": "./esm/index.js",
-  "types": "./esm/index.d.ts",
-  "files": [
-    "/dist",
-    "/lib",
-    "/esm"
-  ],
+  "main": "./dist/lib/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": ["/dist"],
   "license": "MIT",
   "scripts": {
     "dev": "rspress dev",
     "build:docs": "rspress build",
-    "preview": "rspress preview",
-    "create:style": "tsx ./scripts/create-style.ts",
-    "build:style": "tsx ./scripts/build-style.ts",
-    "pack": "rollup -c rollup.config.js --bundleConfigAsCjs",
-    "clean": "rimraf ./lib ./esm ./dist",
-    "build": "npm run clean && npm run create:style && npm run pack && npm run build:style"
+    "build": "bunx father build"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -58,8 +49,6 @@
     "@formily/core": "^2.3.1",
     "@formily/grid": "^2.3.1",
     "@formily/react": "^2.3.1",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rsbuild/core": "^0.2.15",
     "@rsbuild/plugin-react": "^0.2.15",
     "@rspress/plugin-playground": "^1.9.2",
@@ -70,22 +59,14 @@
     "@types/react-dom": "^18.2.18",
     "@types/react-is": "^18.2.4",
     "@types/react-transition-group": "^4.4.10",
-    "fs-extra": "^11.2.0",
+    "father": "^4.3.8",
     "less": "^4.2.0",
     "less-loader": "^11.1.4",
-    "less-plugin-npm-import": "^2.1.0",
     "mfetch": "^0.2.27",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
-    "rollup": "^4.9.2",
-    "rollup-plugin-dts": "^6.1.0",
-    "rollup-plugin-filesize": "^10.0.0",
-    "rollup-plugin-multi-input": "^1.4.1",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.36.0",
     "rspress": "^1.9.2",
-    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }

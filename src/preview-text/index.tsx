@@ -2,9 +2,9 @@ import {
   CascaderProps,
   ConfigProvider,
   DatePickerProps,
-  RangePickerProps as DateRangePickerProps,
   InputNumberProps,
   InputProps,
+  RangePickerProps as DateRangePickerProps,
   SelectProps,
   Space,
   Tag,
@@ -53,7 +53,7 @@ const Input: React.FC<React.PropsWithChildren<InputProps>> = (props) => {
 };
 
 const NumberPicker: React.FC<React.PropsWithChildren<InputNumberProps>> = (
-  props
+  props,
 ) => {
   const prefixCls = usePrefixCls("form-text");
   return (
@@ -66,9 +66,8 @@ const NumberPicker: React.FC<React.PropsWithChildren<InputNumberProps>> = (
               userTyping: false,
               input: "",
             })
-          : props.value
+          : props.value,
       )}
-      {props["suffix"]}
       {props.suffix}
     </Space>
   );
@@ -81,8 +80,8 @@ const Select: React.FC<React.PropsWithChildren<SelectProps>> = observer(
     const dataSource: any[] = field?.dataSource?.length
       ? field.dataSource
       : props?.options?.length
-      ? props.options
-      : [];
+        ? props.options
+        : [];
     const placeholder = usePlaceholder();
     const getSelected = () => {
       const value = props.value;
@@ -108,6 +107,7 @@ const Select: React.FC<React.PropsWithChildren<SelectProps>> = observer(
       return (
         dataSource?.find((item) => {
           const valueKey = "value";
+          // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
           return item[valueKey] == target?.value;
         })?.[labelKey] ||
         target.label ||
@@ -128,7 +128,7 @@ const Select: React.FC<React.PropsWithChildren<SelectProps>> = observer(
         {getLabels()}
       </Space>
     );
-  }
+  },
 );
 
 const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
@@ -139,8 +139,8 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
     const dataSource = field?.dataSource?.length
       ? field.dataSource
       : props?.treeData?.length
-      ? props.treeData
-      : [];
+        ? props.treeData
+        : [];
     const getSelected = () => {
       const value = props.value;
       if (props.multiple) {
@@ -164,7 +164,7 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
       value: any,
       dataSource: any[],
       treeNodeLabelProp: string,
-      treeNodeValueProp: string
+      treeNodeValueProp: string,
     ) => {
       for (let i = 0; i < dataSource?.length; i++) {
         const item = dataSource[i];
@@ -175,7 +175,7 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
             value,
             item?.children,
             treeNodeLabelProp,
-            treeNodeValueProp
+            treeNodeValueProp,
           );
           if (childLabel) {
             childLabel;
@@ -196,7 +196,7 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
               item,
               dataSource,
               props.fieldNames?.title ?? "title",
-              props.fieldNames?.key ?? "key"
+              props.fieldNames?.key ?? "key",
             );
         return <Tag key={key}>{label}</Tag>;
       });
@@ -206,7 +206,7 @@ const TreeSelect: React.FC<React.PropsWithChildren<TreeSelectProps>> = observer(
         {getLabels()}
       </Space>
     );
-  }
+  },
 );
 
 const Cascader: React.FC<React.PropsWithChildren<CascaderProps<any>>> =
@@ -217,17 +217,18 @@ const Cascader: React.FC<React.PropsWithChildren<CascaderProps<any>>> =
     const dataSource: any[] = field?.dataSource?.length
       ? field.dataSource
       : props?.options?.length
-      ? props.options
-      : [];
+        ? props.options
+        : [];
     const findSelectedItem = (
       items: DefaultOptionType[],
-      val: string | number
+      val: string | number,
     ) => {
+      // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
       return items.find((item) => item.value == val);
     };
     const findSelectedItems = (
       sources: DefaultOptionType[],
-      selectedValues: Array<string[] | number[]>
+      selectedValues: Array<string[] | number[]>,
     ): Array<any[]> => {
       return selectedValues.map((value) => {
         const result: Array<DefaultOptionType> = [];
@@ -266,7 +267,7 @@ const Cascader: React.FC<React.PropsWithChildren<CascaderProps<any>>> =
   });
 
 const DatePicker: React.FC<React.PropsWithChildren<DatePickerProps>> = (
-  props
+  props,
 ) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
@@ -276,37 +277,36 @@ const DatePicker: React.FC<React.PropsWithChildren<DatePickerProps>> = (
       props.value,
       props.format,
       locale?.dayjsLocale!,
-      placeholder
+      placeholder,
     );
     return isArr(labels) ? labels.join("~") : labels;
   };
   return <div className={cls(prefixCls, props.className)}>{getLabels()}</div>;
 };
 
-const DateRangePicker: React.FC<
-  React.PropsWithChildren<DateRangePickerProps>
-> = (props) => {
-  const placeholder = usePlaceholder();
-  const prefixCls = usePrefixCls("form-text");
-  const { locale } = useContext(ConfigProvider.ConfigContext);
-  const getLabels = () => {
-    const labels = formatDayjsValue(
-      props.value,
-      props.format,
-      locale?.dayjsLocale!,
-      placeholder
+const DateRangePicker: React.FC<React.PropsWithChildren<DateRangePickerProps>> =
+  (props) => {
+    const placeholder = usePlaceholder();
+    const prefixCls = usePrefixCls("form-text");
+    const { locale } = useContext(ConfigProvider.ConfigContext);
+    const getLabels = () => {
+      const labels = formatDayjsValue(
+        props.value,
+        props.format,
+        locale?.dayjsLocale!,
+        placeholder,
+      );
+      return isArr(labels) ? labels.join("~") : labels;
+    };
+    return (
+      <div className={cls(prefixCls, props.className)} style={props.style}>
+        {getLabels()}
+      </div>
     );
-    return isArr(labels) ? labels.join("~") : labels;
   };
-  return (
-    <div className={cls(prefixCls, props.className)} style={props.style}>
-      {getLabels()}
-    </div>
-  );
-};
 
 const TimePicker: React.FC<React.PropsWithChildren<TimePickerProps>> = (
-  props
+  props,
 ) => {
   const placeholder = usePlaceholder();
   const prefixCls = usePrefixCls("form-text");
@@ -316,7 +316,7 @@ const TimePicker: React.FC<React.PropsWithChildren<TimePickerProps>> = (
       props.value,
       props.format,
       locale?.dayjsLocale!,
-      placeholder
+      placeholder,
     );
     return isArr(labels) ? labels.join("~") : labels;
   };
@@ -327,27 +327,26 @@ const TimePicker: React.FC<React.PropsWithChildren<TimePickerProps>> = (
   );
 };
 
-const TimeRangePicker: React.FC<
-  React.PropsWithChildren<TimeRangePickerProps>
-> = (props) => {
-  const placeholder = usePlaceholder();
-  const prefixCls = usePrefixCls("form-text");
-  const { locale } = useContext(ConfigProvider.ConfigContext);
-  const getLabels = () => {
-    const labels = formatDayjsValue(
-      props.value,
-      props.format,
-      locale?.dayjsLocale!,
-      placeholder
+const TimeRangePicker: React.FC<React.PropsWithChildren<TimeRangePickerProps>> =
+  (props) => {
+    const placeholder = usePlaceholder();
+    const prefixCls = usePrefixCls("form-text");
+    const { locale } = useContext(ConfigProvider.ConfigContext);
+    const getLabels = () => {
+      const labels = formatDayjsValue(
+        props.value,
+        props.format,
+        locale?.dayjsLocale!,
+        placeholder,
+      );
+      return isArr(labels) ? labels.join("~") : labels;
+    };
+    return (
+      <div className={cls(prefixCls, props.className)} style={props.style}>
+        {getLabels()}
+      </div>
     );
-    return isArr(labels) ? labels.join("~") : labels;
   };
-  return (
-    <div className={cls(prefixCls, props.className)} style={props.style}>
-      {getLabels()}
-    </div>
-  );
-};
 
 const Text = (props: React.PropsWithChildren<any>) => {
   const prefixCls = usePrefixCls("form-text");

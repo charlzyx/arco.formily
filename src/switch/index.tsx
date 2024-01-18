@@ -10,15 +10,16 @@ export const Switch = connect(
     },
     (props) => {
       const onChange = props.onChange;
-      delete (props as any)["value"];
+      // biome-ignore lint/performance/noDelete: <explanation>
+      delete (props as any).value;
       return {
         ...props,
         onChange(checked: boolean) {
           onChange?.(checked, null);
         },
       };
-    }
-  )
+    },
+  ),
 );
 
 export default Switch;

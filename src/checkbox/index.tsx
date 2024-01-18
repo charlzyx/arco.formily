@@ -17,7 +17,7 @@ export const Checkbox = connect(
   ArcoCheckbox,
   mapProps({
     value: "checked",
-  })
+  }),
 ) as ComposedCheckbox;
 
 Checkbox.__BYTE_CHECKBOX = true;
@@ -29,7 +29,7 @@ Checkbox.Group = connect(
   }),
   mapReadPretty(PreviewText.Select, {
     mode: "tags",
-  })
+  }),
 );
 
 export default Checkbox;

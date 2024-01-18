@@ -7,48 +7,54 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-      - "v*.*.*" # Push events to matching v*, i.e. v1.0, v20.15.10
+      - "v*.*.*" # Match tags like antd/v1.0.0-alpha.0, antd-v5/v1.0.0-beta.0
 
 permissions:
   contents: write
   discussions: write
 
 jobs:
-  create-release:
-    runs-on: ubuntu-latest
-    outputs:
-      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Query version number
-        id: get_version
-        shell: bash
-        run: |
-          echo "using version tag ${GITHUB_REF:10}"
-          echo ::set-output name=version::"${GITHUB_REF:10}"
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: "${{ steps.get_version.outputs.VERSION }}"
-          body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'
   publish-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Parse Tag
+        id: parse_tag
+        run: |
+          # 获取标签名称
+          tag_name="${GITHUB_REF:10}"
+
+          tag="latest"
+          # 检查是否预发布
+          if [[ $tag_name == *"alpha"* ]]; then
+            tag="alpha"
+          fi
+
+          if [[ $tag_name == *"beta"* ]]; then
+            tag="beta"
+          fi
+
+          echo "::set-output name=module_name::$module_name"
+          echo "::set-output name=version::$tag_name"
+          echo "::set-output name=tag::$tag"
+      - uses: oven-sh/setup-bun@v1
+      - name: Install dependencies
+        run: |
+          bun i
+          bunx father build
+          # 更新 package.json 文件中的版本号
+          sed -i "s/\"version\": \".*\"/\"version\": \"${{steps.parse_tag.outputs.version}}\"/" package.json
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: yarn
-      - run: yarn build
-      - run: npm publish
+      - run: |
+          npm publish --access=public --tag ${{steps.parse_tag.outputs.tag}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
-      - uses: actions/setup-node@v3
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
         with:
-          registry-url: "https://npm.pkg.github.com"
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          tag_name: "${{ steps.parse_tag.outputs.version }}"
+          body: '<a href="https://github.com/charlzyx/arco.formily/blob/master/CHANGELOG.md">CHANGELOG</a>'

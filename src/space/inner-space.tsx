@@ -45,7 +45,7 @@ export const InnerSpace = forwardRef<HTMLDivElement, SpaceProps>(
         [`${prefixCls}-wrap`]: wrap,
         [`${prefixCls}-rtl`]: rtl,
       },
-      className
+      className,
     );
 
     function getMargin(size: SpaceSize) {
@@ -133,7 +133,7 @@ export const InnerSpace = forwardRef<HTMLDivElement, SpaceProps>(
         })}
       </div>
     );
-  }
+  },
 );
 
 InnerSpace.displayName = "Space";

@@ -55,7 +55,7 @@ export const FormItem: ComposeFormItem = connect(
       requiredSymbol: takeAsterisk(),
       extra: props.extra || field.description,
     };
-  })
+  }),
 );
 
 FormItem.BaseItem = BaseItem;

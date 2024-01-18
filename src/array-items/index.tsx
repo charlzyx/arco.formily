@@ -43,7 +43,7 @@ const SortableItem: React.FC<
         {props.children}
       </div>
     );
-  }
+  },
 ) as any;
 
 const SortableList: React.FC<
@@ -58,7 +58,7 @@ const SortableList: React.FC<
         {props.children}
       </div>
     );
-  }
+  },
 ) as any;
 
 const isAdditionComponent = (schema: ISchema) => {

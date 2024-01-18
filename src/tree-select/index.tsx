@@ -15,15 +15,15 @@ export const TreeSelect = connect(
       return {
         ...props,
         suffixIcon:
-          (field as Field)?.["loading"] || (field as Field)?.["validating"] ? (
+          (field as Field)?.loading || (field as Field)?.validating ? (
             <IconLoading />
           ) : (
             props.suffixIcon
           ),
       };
-    }
+    },
   ),
-  mapReadPretty(PreviewText.TreeSelect)
+  mapReadPretty(PreviewText.TreeSelect),
 );
 
 export default TreeSelect;

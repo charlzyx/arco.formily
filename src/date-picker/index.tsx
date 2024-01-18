@@ -32,7 +32,7 @@ export const DatePicker: ComposedDatePicker = connect(
         format={format}
       ></PreviewText.DatePicker>
     );
-  })
+  }),
 );
 
 DatePicker.RangePicker = connect(
@@ -47,7 +47,7 @@ DatePicker.RangePicker = connect(
         format={format}
       ></PreviewText.DateRangePicker>
     );
-  })
+  }),
 );
 
 DatePicker.WeekPicker = connect(
@@ -61,7 +61,7 @@ DatePicker.WeekPicker = connect(
         format={format}
       ></PreviewText.DatePicker>
     );
-  })
+  }),
 );
 
 DatePicker.MonthPicker = connect(
@@ -75,7 +75,7 @@ DatePicker.MonthPicker = connect(
         format={format}
       ></PreviewText.DatePicker>
     );
-  })
+  }),
 );
 
 DatePicker.QuarterPicker = connect(
@@ -89,7 +89,7 @@ DatePicker.QuarterPicker = connect(
         format={format}
       ></PreviewText.DatePicker>
     );
-  })
+  }),
 );
 
 DatePicker.YearPicker = connect(
@@ -103,7 +103,7 @@ DatePicker.YearPicker = connect(
         format={format}
       ></PreviewText.DatePicker>
     );
-  })
+  }),
 );
 
 export default DatePicker;

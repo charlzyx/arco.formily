@@ -76,6 +76,7 @@ const createFormCollapse = (defaultActiveKeys: ActiveKeys = []) => {
         if (formCollapse.activeKeys.includes(key)) {
           return true;
         }
+        // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
       } else if (formCollapse.activeKeys == key) {
         return true;
       }
@@ -88,7 +89,8 @@ const createFormCollapse = (defaultActiveKeys: ActiveKeys = []) => {
     removeActiveKey(key: ActiveKey) {
       if (Array.isArray(formCollapse.activeKeys)) {
         formCollapse.activeKeys = formCollapse.activeKeys.filter(
-          (item) => item != key
+          // biome-ignore lint/suspicious/noDoubleEquals: <explanation>
+          (item) => item != key,
         );
       } else {
         formCollapse.activeKeys = "";
@@ -160,7 +162,7 @@ export const FormCollapse: ComposedFormCollapse = observer(
         ))}
       </Collapse>
     );
-  }
+  },
 );
 
 const CollapsePanel: React.FC<React.PropsWithChildren<CollapseItemProps>> = ({

@@ -5,7 +5,7 @@ import "./style";
 
 export const NumberPicker = connect(
   InputNumber,
-  mapReadPretty(PreviewText.NumberPicker)
+  mapReadPretty(PreviewText.NumberPicker),
 );
 
 export default NumberPicker;

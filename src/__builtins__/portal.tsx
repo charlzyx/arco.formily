@@ -1,7 +1,7 @@
+import { Observer } from "@formily/react";
+import { observable } from "@formily/reactive";
 import React, { Fragment } from "react";
 import { createPortal } from "react-dom";
-import { observable } from "@formily/reactive";
-import { Observer } from "@formily/react";
 import { render as reactRender, unmount as reactUnmount } from "./render";
 export interface IPortalProps {
   id?: string | symbol;
@@ -37,12 +37,13 @@ export const createPortalProvider = (id: string | symbol) => {
 
 export function createPortalRoot<T extends React.ReactNode>(
   host: HTMLElement,
-  id: string
+  id: string,
 ) {
   function render(renderer?: () => T) {
     if (PortalMap.has(id)) {
       PortalMap.set(id, renderer?.());
     } else if (host) {
+      // biome-ignore lint/complexity/noUselessFragments: <explanation>
       reactRender(<Fragment>{renderer?.()}</Fragment>, host);
     }
   }
