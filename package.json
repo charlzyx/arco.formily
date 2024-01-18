@@ -21,34 +21,19 @@
     "build": "bunx father build"
   },
   "dependencies": {
-    "classnames": "^2.5.1",
-    "react-sortable-hoc": "^2.0.0",
-    "react-sticky-box": "^2.0.5",
-    "react-transition-group": "^4.4.5"
-  },
-  "peerDependencies": {
-    "@arco-design/web-react": "^2",
-    "@formily/core": "^2",
-    "@formily/grid": "^2",
-    "@formily/path": "^2",
-    "@formily/react": "^2",
-    "@formily/reactive": "^2",
-    "@formily/shared": "^2",
-    "classnames": "^2",
-    "dayjs": "*",
-    "react": "^16 || ^17 || ^18",
-    "react-dom": "^16 || ^17 || ^18",
-    "react-is": "^16 || ^17 || ^18",
-    "react-sortable-hoc": "^2",
-    "react-sticky-box": "^2",
-    "react-transition-group": "^4"
-  },
-  "devDependencies": {
     "@arco-design/web-react": "^2.58.0",
-    "@arco-plugins/unplugin-react": "^1.0.0-alpha.1",
     "@formily/core": "^2.3.1",
     "@formily/grid": "^2.3.1",
     "@formily/react": "^2.3.1",
+    "classnames": "^2.5.1",
+    "react-sortable-hoc": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-sticky-box": "^2.0.5",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@arco-plugins/unplugin-react": "^1.0.0-alpha.1",
     "@rsbuild/core": "^0.2.15",
     "@rsbuild/plugin-react": "^0.2.15",
     "@rspress/plugin-playground": "^1.9.2",
@@ -63,8 +48,6 @@
     "less": "^4.2.0",
     "less-loader": "^11.1.4",
     "mfetch": "^0.2.27",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
     "rspress": "^1.9.2",
     "typescript": "^5.3.3"
