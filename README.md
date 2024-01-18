@@ -1,5 +1,7 @@
 # arco.formily **UNOFFICAL** `@formily/arco`
 
+[![version](https://badgen.net/npm/v/arco.formily)](https://www.npmjs.com/package/arco.formily)
+
 鉴于[官方](https://github.com/formilyjs/arco) ~你没看错, 就是空的嗯~未知原因, 没有开源版本, 就凭兴趣简单写了写练手;
 
 欢迎随意 fork & PR, keep RELAX
