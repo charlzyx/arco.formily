@@ -48,12 +48,6 @@ TODO:
 - DatePicker/\*, Preview.DatePicker 根据 dayjs 适配重构 (arco-style)
 - ArrayTabs, FormTab 适配 `activeKey` -> `activeTab` (arco-style)
 
-## 当前项目已知构建问题
-
-- 样式打包总是丢失 `import './style.less'` 这种文件, 直接丢弃了, 不会在产物中出现,
-  所以在 `scripts` 写了个蠢蠢的脚本去替换
-- github-actions npm 发布显示失败 404, 然而, 这个包已经成功发布了, 暂时不知道什么问题
-
 ## 技术栈
 
 - [RsPress](https://rspress.dev/zh/) for 开发预览
