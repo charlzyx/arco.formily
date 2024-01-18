@@ -1,4 +1,20 @@
 import type { Schema } from "@formily/react";
+import { FieldDisplayTypes, GeneralField } from "@formily/core";
+import type { TableProps } from "@arco-design/web-react";
+
+export type ColumnProps<T> = Required<TableProps<T>>["columns"][0];
+
+
+export interface ObservableColumnSource {
+  field?: GeneralField;
+  columnProps: ColumnProps<any> & {
+    /** 列宽是否可拖动, 默认开启 */
+    resizeable?: boolean;
+  };
+  schema: Schema;
+  display: FieldDisplayTypes;
+  name: string;
+}
 
 export const hasSortable = (schema: Schema): any => {
   const canMap = (schema.items || (schema as any)) as Schema;

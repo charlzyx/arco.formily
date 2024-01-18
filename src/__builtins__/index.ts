@@ -4,3 +4,4 @@ export * from "./portal";
 export * from "./loading";
 export * from "./pickDataProps";
 export * from "./toArray";
+export { SortableContainer, SortableElement } from "react-sortable-hoc";

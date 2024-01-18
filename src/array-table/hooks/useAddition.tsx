@@ -1,6 +1,6 @@
 import { RecursionField, useFieldSchema } from "@formily/react";
 import React from "react";
-import { isAdditionComponent } from "./utils";
+import { isAdditionComponent } from "../utils";
 
 export const useAddition = () => {
   const schema = useFieldSchema();

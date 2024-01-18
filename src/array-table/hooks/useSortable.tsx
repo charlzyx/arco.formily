@@ -3,8 +3,8 @@ import { useField, useFieldSchema } from "@formily/react";
 import { toJS } from "@formily/reactive";
 import React, { useCallback, useMemo } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import { hasSortable } from "./utils";
-import { usePrefixCls } from "../../__builtins__/hooks/usePrefixCls";
+import { usePrefixCls } from "../../__builtins__";
+import { hasSortable } from "../utils";
 
 const SortableRow = SortableElement((props: any) => <tr {...props} />);
 const SortableBody = SortableContainer((props: any) => (
@@ -81,7 +81,7 @@ export const useSortable = (parentRef: React.RefObject<HTMLDivElement>) => {
         />
       );
     },
-    [field, parentRef, prefixCls]
+    [field, parentRef, prefixCls],
   );
 
   const body = {

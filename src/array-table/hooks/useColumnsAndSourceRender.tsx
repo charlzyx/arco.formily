@@ -1,41 +1,52 @@
-import { ArrayBase as ArcoArrayBase } from "../../array-base";
-import type {
-  ArrayField,
-  FieldDisplayTypes,
-  GeneralField,
-} from "@formily/core";
-import type { Schema } from "@formily/react";
-import { RecursionField, useFieldSchema } from "@formily/react";
+import { ArrayField, isArrayField } from "@formily/core";
+import { Schema } from "@formily/json-schema";
+import { RecursionField, useField, useFieldSchema } from "@formily/react";
 import { isArr } from "@formily/shared";
+import { useState } from "react";
+import { ArrayBase } from "../../array-base";
 import {
-  TableColumnProps,
-  Dropdown,
-  Menu,
-  Space,
-} from "@arco-design/web-react";
-import React from "react";
+  ColumnProps,
+  ObservableColumnSource,
+  isAdditionComponent,
+  isColumnComponent,
+} from "../utils";
 
-import { isAdditionComponent, isColumnComponent } from "./utils";
-
-const ArrayBase = ArcoArrayBase as Required<typeof ArcoArrayBase>;
-
-export interface ObservableColumnSource {
-  field: GeneralField;
-  columnProps: TableColumnProps<any>;
-  schema: Schema;
-  display: FieldDisplayTypes;
-  name: string;
-}
-
-const parseArrayItems = (
-  schema: Schema["items"],
-  parser: (subSchema: Schema) => any
+const parseSources = (
+  arrayField: ArrayField,
+  schema: Schema,
 ): ObservableColumnSource[] => {
+  if (isColumnComponent(schema) || isAdditionComponent(schema)) {
+    if (!schema["x-component-props"]?.dataIndex && !schema.name) return [];
+    const name = schema["x-component-props"]?.dataIndex || schema.name;
+    const field = arrayField.query(arrayField.address.concat(name)).take();
+    const columnProps =
+      (field?.component as any)?.[1] || schema["x-component-props"] || {};
+    const display = field?.display || schema["x-display"];
+    return [
+      {
+        name,
+        display,
+        field,
+        schema,
+        columnProps,
+      },
+    ];
+  } else if (schema.properties) {
+    return schema.reduceProperties<
+      ObservableColumnSource[],
+      ObservableColumnSource[]
+    >((buf, schema) => {
+      return buf.concat(parseSources(arrayField, schema));
+    }, []);
+  }
+  return [];
+};
+const parseArrayItems = (arrayField: ArrayField, schema: Schema["items"]) => {
   if (!schema) return [];
   const sources: ObservableColumnSource[] = [];
   const items = isArr(schema) ? schema : [schema];
-  return items.reduce((columns, subSchema) => {
-    const item = parser(subSchema);
+  return items.reduce((columns, schema) => {
+    const item = parseSources(arrayField, schema);
     if (item) {
       return columns.concat(item);
     }
@@ -43,66 +54,44 @@ const parseArrayItems = (
   }, sources);
 };
 
-export const useColumnsAndSourceRender = (arrayField: ArrayField) => {
+export const useArrayTableSources = () => {
+  const arrayField = useField<ArrayField>();
   const schema = useFieldSchema();
-  const parseSources = (subSchema: Schema): ObservableColumnSource[] => {
-    if (isColumnComponent(subSchema) || isAdditionComponent(subSchema)) {
-      if (!subSchema["x-component-props"]?.dataIndex && !subSchema.name)
-        return [];
+  const sources = parseArrayItems(arrayField, schema.items);
+  return sources;
+};
 
-      const name = subSchema["x-component-props"]?.dataIndex || subSchema.name;
-
-      const field = arrayField.query(arrayField.address.concat(name)).take()!;
-
-      const columnProps =
-        (field?.component as any)?.[1] || subSchema["x-component-props"] || {};
-
-      const display = field?.display || subSchema["x-display"];
-
-      return [
-        {
-          name,
-          display,
-          field,
-          schema: subSchema,
-          columnProps,
-        },
-      ];
-    } else if (subSchema.properties) {
-      return subSchema.reduceProperties((buf, childSchema) => {
-        return buf.concat(parseSources(childSchema));
-      }, [] as ObservableColumnSource[]);
-    } else {
-      return [];
-    }
-  };
-
-  if (!schema) throw new Error("can not found schema object");
-
-  const sources = parseArrayItems(schema.items as any, parseSources);
-
-  const columns = sources.reduce(
-    (buf, { name, columnProps, schema: subSchema, display }, key) => {
-      if (display === "hidden") return buf;
-
-      if (!isColumnComponent(subSchema)) return buf;
-
+export const useArrayTableColumns = (
+  arrayField: ArrayField,
+  sources: ObservableColumnSource[],
+  dataSource: any[],
+) => {
+  const columns = sources.reduce<ColumnProps<any>[]>(
+    (buf, { name, columnProps, schema, display }, key) => {
+      if (display !== "visible" || !isColumnComponent(schema)) {
+        return buf;
+      }
       return buf.concat({
         ...columnProps,
-        filters: Array.isArray(columnProps.filters)
-          ? columnProps.filters
-          : undefined,
-        key: name,
+        key,
         dataIndex: name,
         render: (value: any, record: any) => {
-          const index = arrayField?.value?.indexOf(record);
+          /**
+           * 优化笔记：
+           * 这里用传入的 dataSoruce 比使用 arrayField.value 要快得多， 在10w条数据测试中感受明显
+           * 在外部的 slice 创造了一个浅拷贝, 即这里的 dataSource 是个浅拷贝， 那么这个浅拷贝的 indexOf 在内部的遍历
+           * 就能够减少那一堆本来 Observer 的 get handle;
+           * 跟这里有异曲同工之妙 @link https://github.com/alibaba/formily/pull/3863#discussion_r1234706804
+           */
+          // const index = arrayField.value.indexOf(record);
+          const index = dataSource.indexOf(record);
           const children = (
             <ArrayBase.Item
               index={index}
               record={() => arrayField?.value?.[index]}
             >
               <RecursionField
-                schema={subSchema}
+                schema={schema}
                 name={index}
                 onlyRenderProperties
               />
@@ -112,24 +101,27 @@ export const useColumnsAndSourceRender = (arrayField: ArrayField) => {
         },
       });
     },
-    [] as TableColumnProps<any>[]
+    [],
   );
 
-  const renderSources = () => {
-    return sources.map((column, key) => {
-      //专门用来承接对Column的状态管理
-      if (!isColumnComponent(column.schema)) return null;
+  return columns;
+};
 
-      return (
-        <RecursionField
-          key={key}
-          schema={column.schema}
-          name={column.name}
-          onlyRenderSelf
-        />
-      );
-    });
-  };
+export const useAddition = () => {
+  const schema = useFieldSchema();
+  return schema.reduceProperties((addition, schema, key) => {
+    if (isAdditionComponent(schema)) {
+      return <RecursionField schema={schema} name={key} />;
+    }
+    return addition;
+  }, null);
+};
 
-  return [columns, renderSources] as const;
+export const useArrayField = () => {
+  const field = useField();
+  let array = field;
+  while (array && !isArrayField(array)) {
+    array = array.parent;
+  }
+  return array;
 };
