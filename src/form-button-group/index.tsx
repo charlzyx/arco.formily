@@ -58,7 +58,7 @@ function getDefaultBackground() {
 }
 
 export const FormButtonGroup: ComposedButtonGroup = ({
-  align,
+  align = "left",
   gutter,
   ...props
 }) => {
@@ -74,8 +74,8 @@ export const FormButtonGroup: ComposedButtonGroup = ({
           align === "left"
             ? "flex-start"
             : align === "right"
-              ? "flex-end"
-              : "center",
+            ? "flex-end"
+            : "center",
         display: "flex",
       }}
     >
@@ -84,13 +84,8 @@ export const FormButtonGroup: ComposedButtonGroup = ({
   );
 };
 
-FormButtonGroup.defaultProps = {
-  align: "left",
-};
-
 FormButtonGroup.FormItem = ({ gutter, ...props }) => {
   const formLayout = useFormLayout();
-  const layout = props.layout || formLayout;
   return (
     <BaseItem
       label=" "
@@ -112,7 +107,7 @@ FormButtonGroup.FormItem = ({ gutter, ...props }) => {
   );
 };
 
-FormButtonGroup.Sticky = ({ align, ...props }) => {
+FormButtonGroup.Sticky = ({ align = "left", ...props }) => {
   const ref = useRef(null);
   const [color, setColor] = useState("transparent");
   const prefixCls = usePrefixCls("formily-button-group");
@@ -144,18 +139,14 @@ FormButtonGroup.Sticky = ({ align, ...props }) => {
             align === "left"
               ? "flex-start"
               : align === "right"
-                ? "flex-end"
-                : "center",
+              ? "flex-end"
+              : "center",
         }}
       >
         {props.children}
       </div>
     </StickyBox>
   );
-};
-
-FormButtonGroup.Sticky.defaultProps = {
-  align: "left",
 };
 
 export default FormButtonGroup;
