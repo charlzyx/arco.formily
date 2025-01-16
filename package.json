@@ -13,7 +13,9 @@
   "main": "./dist/lib/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "license": "MIT",
   "scripts": {
     "dev": "rspress dev",
@@ -27,12 +29,16 @@
     "@formily/react": "^2.3.1",
     "classnames": "^2.5.1",
     "react-sortable-hoc": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-sticky-box": "^2.0.5",
     "react-transition-group": "^4.4.5"
   },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19",
+    "react-dom": "^18.2.0 || ^19"
+  },
   "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "@arco-plugins/unplugin-react": "^1.0.0-alpha.1",
     "@rsbuild/core": "^0.2.15",
     "@rsbuild/plugin-react": "^0.2.15",

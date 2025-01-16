@@ -62,7 +62,7 @@ const range = (count: number) => Array.from({ length: count }).map((_, i) => i);
 
 const takeDefaultActiveKeys = (
   dataSourceLength: number,
-  defaultOpenPanelCount: number,
+  defaultOpenPanelCount: number
 ) => {
   if (dataSourceLength < defaultOpenPanelCount)
     return range(dataSourceLength).map((x) => x.toString());
@@ -79,148 +79,153 @@ const insertActiveKeys = (activeKeys: string[], index: number) => {
   }, [] as string[]);
 };
 
-export const ArrayCollapse: ComposedArrayCollapse = observer((props) => {
-  const field = useField<ArrayField>();
-  const dataSource = Array.isArray(field.value) ? field.value : [];
-  const [activeKeys, setActiveKeys] = useState<string[]>(
-    takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!),
-  );
-  const schema = useFieldSchema();
-  const prefixCls = usePrefixCls("formily-array-collapse");
-  useEffect(() => {
-    if (!field.modified && dataSource.length) {
-      setActiveKeys(
-        takeDefaultActiveKeys(dataSource.length, props.defaultOpenPanelCount!),
-      );
-    }
-  }, [dataSource.length, field]);
-  if (!schema) throw new Error("can not found schema object");
-  const { onAdd, onCopy, onRemove, onMoveDown, onMoveUp } = props;
-
-  const renderAddition = () => {
-    return schema.reduceProperties((addition, schema, key) => {
-      if (isAdditionComponent(schema)) {
-        return <RecursionField schema={schema} name={key} />;
-      }
-      return addition;
-    }, null);
-  };
-  const renderEmpty = () => {
-    if (dataSource.length) return;
-    return (
-      <Card className={cls(`${prefixCls}-item`, props.className)}>
-        <Empty />
-      </Card>
+export const ArrayCollapse: ComposedArrayCollapse = observer(
+  ({ defaultOpenPanelCount = 5, ...props }) => {
+    const field = useField<ArrayField>();
+    const dataSource = Array.isArray(field.value) ? field.value : [];
+    const [activeKeys, setActiveKeys] = useState<string[]>(
+      takeDefaultActiveKeys(dataSource.length, defaultOpenPanelCount)
     );
-  };
+    const schema = useFieldSchema();
+    const prefixCls = usePrefixCls("formily-array-collapse");
+    useEffect(() => {
+      if (!field.modified && dataSource.length) {
+        setActiveKeys(
+          takeDefaultActiveKeys(dataSource.length, defaultOpenPanelCount)
+        );
+      }
+    }, [dataSource.length, field]);
+    if (!schema) throw new Error("can not found schema object");
+    const { onAdd, onCopy, onRemove, onMoveDown, onMoveUp } = props;
 
-  const renderItems = () => {
-    return (
-      <Collapse
-        lazyload
-        {...props}
-        activeKey={activeKeys}
-        onChange={(_: string, keys: string[]) => setActiveKeys(keys)}
-        className={cls(`${prefixCls}-item`, props.className)}
-      >
-        {dataSource.map((item, index) => {
-          const items = Array.isArray(schema.items)
-            ? schema.items[index] || schema.items[0]
-            : schema.items!;
+    const renderAddition = () => {
+      return schema.reduceProperties((addition, schema, key) => {
+        if (isAdditionComponent(schema)) {
+          return <RecursionField schema={schema} name={key} />;
+        }
+        return addition;
+      }, null);
+    };
+    const renderEmpty = () => {
+      if (dataSource.length) return;
+      return (
+        <Card className={cls(`${prefixCls}-item`, props.className)}>
+          <Empty />
+        </Card>
+      );
+    };
 
-          const panelProps = field
-            .query(`${field.address}.${index}`)
-            .get("componentProps");
-          const props: CollapsePanelProps = items["x-component-props"];
-          const header = () => {
-            const header = panelProps?.header || props.header || field.title;
-            const path = field.address.concat(index);
-            const errors = field.form.queryFeedbacks({
-              type: "error",
-              address: `${path}.**`,
-            });
-            return (
-              <ArrayBase.Item index={index} record={() => field.value?.[index]}>
+    const renderItems = () => {
+      return (
+        <Collapse
+          lazyload
+          {...props}
+          activeKey={activeKeys}
+          onChange={(_: string, keys: string[]) => setActiveKeys(keys)}
+          className={cls(`${prefixCls}-item`, props.className)}
+        >
+          {dataSource.map((item, index) => {
+            const items = Array.isArray(schema.items)
+              ? schema.items[index] || schema.items[0]
+              : schema.items!;
+
+            const panelProps = field
+              .query(`${field.address}.${index}`)
+              .get("componentProps");
+            const props: CollapsePanelProps = items["x-component-props"];
+            const header = () => {
+              const header = panelProps?.header || props.header || field.title;
+              const path = field.address.concat(index);
+              const errors = field.form.queryFeedbacks({
+                type: "error",
+                address: `${path}.**`,
+              });
+              return (
+                <ArrayBase.Item
+                  index={index}
+                  record={() => field.value?.[index]}
+                >
+                  <RecursionField
+                    schema={items}
+                    name={index}
+                    filterProperties={(schema) => {
+                      if (!isIndexComponent(schema)) return false;
+                      return true;
+                    }}
+                    onlyRenderProperties
+                  />
+                  {errors.length ? (
+                    <Badge count={errors.length}>{header}</Badge>
+                  ) : (
+                    header
+                  )}
+                </ArrayBase.Item>
+              );
+            };
+
+            const extra = (
+              <ArrayBase.Item index={index} record={item}>
                 <RecursionField
                   schema={items}
                   name={index}
                   filterProperties={(schema) => {
-                    if (!isIndexComponent(schema)) return false;
+                    if (!isOperationComponent(schema)) return false;
                     return true;
                   }}
                   onlyRenderProperties
                 />
-                {errors.length ? (
-                  <Badge count={errors.length}>{header}</Badge>
-                ) : (
-                  header
-                )}
+                {panelProps?.extra}
               </ArrayBase.Item>
             );
-          };
 
-          const extra = (
-            <ArrayBase.Item index={index} record={item}>
+            const content = (
               <RecursionField
                 schema={items}
                 name={index}
                 filterProperties={(schema) => {
-                  if (!isOperationComponent(schema)) return false;
+                  if (isIndexComponent(schema)) return false;
+                  if (isOperationComponent(schema)) return false;
                   return true;
                 }}
-                onlyRenderProperties
               />
-              {panelProps?.extra}
-            </ArrayBase.Item>
-          );
-
-          const content = (
-            <RecursionField
-              schema={items}
-              name={index}
-              filterProperties={(schema) => {
-                if (isIndexComponent(schema)) return false;
-                if (isOperationComponent(schema)) return false;
-                return true;
-              }}
-            />
-          );
-          return (
-            <Collapse.Item
-              {...props}
-              {...panelProps}
-              // forceRender
-              key={index}
-              name={index.toString()}
-              header={header()}
-              extra={extra}
-            >
-              <ArrayBase.Item index={index} key={index} record={item}>
-                {content}
-              </ArrayBase.Item>
-            </Collapse.Item>
-          );
-        })}
-      </Collapse>
+            );
+            return (
+              <Collapse.Item
+                {...props}
+                {...panelProps}
+                // forceRender
+                key={index}
+                name={index.toString()}
+                header={header()}
+                extra={extra}
+              >
+                <ArrayBase.Item index={index} key={index} record={item}>
+                  {content}
+                </ArrayBase.Item>
+              </Collapse.Item>
+            );
+          })}
+        </Collapse>
+      );
+    };
+    return (
+      <ArrayBase
+        onAdd={(index) => {
+          onAdd?.(index);
+          setActiveKeys(insertActiveKeys(activeKeys, index));
+        }}
+        onCopy={onCopy}
+        onRemove={onRemove}
+        onMoveUp={onMoveUp}
+        onMoveDown={onMoveDown}
+      >
+        {renderEmpty()}
+        {renderItems()}
+        {renderAddition()}
+      </ArrayBase>
     );
-  };
-  return (
-    <ArrayBase
-      onAdd={(index) => {
-        onAdd?.(index);
-        setActiveKeys(insertActiveKeys(activeKeys, index));
-      }}
-      onCopy={onCopy}
-      onRemove={onRemove}
-      onMoveUp={onMoveUp}
-      onMoveDown={onMoveDown}
-    >
-      {renderEmpty()}
-      {renderItems()}
-      {renderAddition()}
-    </ArrayBase>
-  );
-});
+  }
+);
 
 const CollapsePanel: React.FC<React.PropsWithChildren<CollapsePanelProps>> = ({
   children,
@@ -230,9 +235,6 @@ const CollapsePanel: React.FC<React.PropsWithChildren<CollapsePanelProps>> = ({
 
 CollapsePanel.displayName = "CollapsePanel";
 
-ArrayCollapse.defaultProps = {
-  defaultOpenPanelCount: 5,
-};
 ArrayCollapse.displayName = "ArrayCollapse";
 ArrayCollapse.CollapsePanel = CollapsePanel;
 

@@ -44,11 +44,11 @@ export interface IFormilyLayoutContext
 export type IFormilyLayoutProps = IFormilyLayoutContext;
 
 export const FormLayoutDeepContext = createContext<IFormilyLayoutContext>(
-  null as unknown as IFormilyLayoutContext,
+  null as unknown as IFormilyLayoutContext
 );
 
 export const FormLayoutShallowContext = createContext<IFormilyLayoutContext>(
-  null as unknown as IFormilyLayoutContext,
+  null as unknown as IFormilyLayoutContext
 );
 
 export const useFormDeepLayout = () => useContext(FormLayoutDeepContext);
@@ -66,7 +66,14 @@ export const FormLayout: React.FC<
   useFormLayout: () => IFormilyLayoutContext;
   useFormDeepLayout: () => IFormilyLayoutContext;
   useFormShallowLayout: () => IFormilyLayoutContext;
-} = ({ shallow, children, prefixCls, className, style, ...otherProps }) => {
+} = ({
+  shallow = true,
+  children,
+  prefixCls,
+  className,
+  style,
+  ...otherProps
+}) => {
   const ctx = useContext(ConfigProvider.ConfigContext);
   const { ref, props } = useResponsiveFormLayout<ArcoFormLayout>(otherProps);
   const deepLayout = useFormDeepLayout();
@@ -79,7 +86,7 @@ export const FormLayout: React.FC<
       [`${formPrefixCls}-size-${props.size || "default"}`]:
         props.size || ctx.size,
     },
-    className,
+    className
   );
   const renderChildren = () => {
     const newDeepLayout: IFormilyLayoutContext = {
@@ -113,10 +120,6 @@ export const FormLayout: React.FC<
       {renderChildren()}
     </div>
   );
-};
-
-FormLayout.defaultProps = {
-  shallow: true,
 };
 
 FormLayout.useFormDeepLayout = useFormDeepLayout;

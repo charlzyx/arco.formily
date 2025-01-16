@@ -3,6 +3,8 @@ import { isVoidField } from "@formily/core";
 import { connect, mapProps } from "@formily/react";
 import "./style";
 
+const renderTitle = (item: any) => item.value;
+
 export const Transfer = connect(
   ArcoTransfer,
   mapProps(
@@ -13,6 +15,7 @@ export const Transfer = connect(
       if (isVoidField(field)) return props;
       return {
         ...props,
+        render: props.render ?? renderTitle,
         dataSource:
           field.dataSource?.map((item) => {
             return {
@@ -22,12 +25,8 @@ export const Transfer = connect(
             };
           }) || [],
       };
-    },
-  ),
+    }
+  )
 );
-
-Transfer.defaultProps = {
-  render: (item) => item.value,
-};
 
 export default Transfer;
